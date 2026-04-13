@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>胡一平 Evan — Personal Website</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#fefefe;--bg-soft:#f8f7f4;--bg-card:#fff;
+  --accent:#e07a3a;--accent-light:rgba(224,122,58,.10);--accent-glow:rgba(224,122,58,.25);
+  --text-primary:#1a1a1a;--text-secondary:#5a5a5a;--text-dim:#9a9a9a;
+  --border:rgba(0,0,0,.06);--border-hover:rgba(224,122,58,.3);
+  --shadow:0 2px 20px rgba(0,0,0,.04);--shadow-hover:0 8px 30px rgba(0,0,0,.08);
+  --font-body:'Noto Sans SC',sans-serif;--font-mono:'JetBrains Mono',monospace;
+  --xhs-red:#ff2442;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text-primary);overflow-x:hidden;min-height:100vh}
+
+/* ===== GLOW BG ===== */
+.glow-bg{position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:0;overflow:hidden}
+.glow-orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.28;animation:orbF 14s ease-in-out infinite}
+.glow-orb.o1{width:600px;height:600px;background:radial-gradient(circle,rgba(224,122,58,.35),transparent 70%);top:-150px;right:-100px;animation-duration:16s}
+.glow-orb.o2{width:500px;height:500px;background:radial-gradient(circle,rgba(244,162,97,.25),transparent 70%);bottom:5%;left:-120px;animation-duration:20s;animation-delay:-5s}
+.glow-orb.o3{width:400px;height:400px;background:radial-gradient(circle,rgba(224,122,58,.18),transparent 70%);top:35%;right:15%;animation-duration:18s;animation-delay:-9s}
+@keyframes orbF{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-25px) scale(1.06)}66%{transform:translate(-25px,20px) scale(.94)}}
+
+/* ===== NAV ===== */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(254,254,254,.75);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
+.nav-inner{max-width:100%;margin:0 auto;padding:18px 48px 14px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:var(--font-body);font-size:26px;font-weight:900;color:var(--text-primary);letter-spacing:1px;white-space:nowrap}
+.nav-tabs{display:flex;align-items:center;gap:6px;font-size:21px}
+.nav-sep{color:var(--text-dim);margin:0 4px;font-weight:300;user-select:none}
+.tab-btn{background:none;border:none;color:var(--text-primary);font-family:var(--font-body);font-size:21px;font-weight:600;padding:7px 18px;cursor:pointer;border-radius:100px;transition:all .3s;letter-spacing:.5px}
+.tab-btn:hover{color:var(--accent)}
+.tab-btn.active{background:var(--text-primary);color:#fff}
+.dl-btn{display:flex;align-items:center;gap:7px;padding:8px 20px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-family:var(--font-body);font-size:20px;font-weight:600;cursor:pointer;transition:all .3s;text-decoration:none}
+.dl-btn:hover{background:#c96a2e;transform:translateY(-1px);box-shadow:0 4px 14px rgba(224,122,58,.3)}
+.dl-btn svg{width:16px;height:16px}
+
+/* ===== PAGES ===== */
+.page{display:none;padding-top:70px;position:relative;z-index:1;animation:pgIn .5s ease forwards}
+.page.active{display:block}
+@keyframes pgIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== PAGE 1: HOME ===== */
+.home-wrap{width:100%;height:calc(100vh - 70px);position:relative;overflow:hidden}
+.home-avatar-area{position:absolute;bottom:0;left:50%;transform:translateX(-50%);z-index:2}
+.home-avatar-area img{height:66vh;width:auto;filter:drop-shadow(0 12px 40px rgba(0,0,0,.07))}
+
+/* Keyword tracks - 4 semicircle tracks, center = bottom-center of screen */
+.kw-tracks{position:absolute;bottom:0;left:50%;width:0;height:0;z-index:1}
+.kw-track{position:absolute;bottom:0;left:0;width:0;height:0;transform-origin:0 0}
+.kw-word{position:absolute;font-family:var(--font-body);font-weight:900;letter-spacing:4px;user-select:none;white-space:nowrap;cursor:default;
+  color:#fff;
+  -webkit-text-stroke:2.5px #1a1a1a;
+  paint-order:stroke fill;
+  text-shadow:none}
+
+.home-text{position:absolute;bottom:48px;left:48px;z-index:3;max-width:480px}
+.home-text .welcome{font-size:30px;font-weight:700;margin-bottom:10px;line-height:1.4;white-space:nowrap}
+.home-text .welcome .emoji{font-size:32px}
+.home-text .desc{font-size:14px;color:var(--text-secondary);line-height:1.9}
+
+/* ===== COMMON ===== */
+.content-section{width:100%;max-width:1400px;margin:0 auto;padding:50px 48px}
+.section-title{font-size:24px;font-weight:700;margin-bottom:32px;position:relative;display:inline-block}
+.section-title::after{content:'';position:absolute;bottom:-5px;left:0;width:28px;height:3px;background:var(--accent);border-radius:2px}
+.page-hero{text-align:center;padding:60px 48px 24px;width:100%;max-width:1400px;margin:0 auto}
+.page-hero h2{font-size:30px;font-weight:700}
+.page-hero .subtitle{color:var(--text-secondary);font-size:14px;margin-top:8px}
+.divider{width:100%;max-width:1400px;margin:0 auto;padding:0 48px}
+.divider-line{height:1px;background:linear-gradient(to right,transparent,var(--border),transparent)}
+
+/* ===== PAGE 2: RESUME ===== */
+.info-grid{display:grid;grid-template-columns:180px 1fr;gap:36px;align-items:start;margin-bottom:36px}
+.info-photo{width:160px;height:200px;border-radius:14px;overflow:hidden;border:2px solid var(--border);box-shadow:var(--shadow)}
+.info-photo img{width:100%;height:100%;object-fit:cover}
+.info-details h3{font-size:26px;font-weight:700;margin-bottom:2px}
+.info-details .en-name{font-weight:600;color:var(--accent);font-size:16px;margin-bottom:10px}
+.info-meta{display:flex;flex-wrap:wrap;gap:14px;color:var(--text-secondary);font-size:13px;margin-bottom:14px}
+.core-tags{display:flex;flex-wrap:wrap;gap:7px}
+.core-tag{padding:4px 13px;border:1px solid var(--border-hover);border-radius:100px;font-size:11px;color:var(--accent);background:var(--accent-light);transition:all .3s}
+.core-tag:hover{background:var(--accent-glow);transform:translateY(-1px)}
+
+.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+.edu-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:20px;box-shadow:var(--shadow);transition:all .3s;display:flex;align-items:center;gap:16px}
+.edu-card:hover{border-color:var(--border-hover);box-shadow:var(--shadow-hover);transform:translateY(-2px)}
+.edu-card .edu-logo{width:48px;height:48px;border-radius:50%;object-fit:cover;flex-shrink:0}
+.edu-card .school{font-size:14px;font-weight:500;margin-bottom:2px}
+.edu-card .major{color:var(--accent);font-size:12px;margin-bottom:2px}
+.edu-card .time{color:var(--text-dim);font-size:11px;font-family:var(--font-mono)}
+.edu-card .degree-badge{display:inline-block;padding:2px 8px;background:var(--accent-light);border-radius:4px;font-size:10px;color:var(--accent);margin-top:4px}
+.awards-box{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:16px 20px;box-shadow:var(--shadow)}
+.awards-box h4{font-size:12px;color:var(--accent);margin-bottom:6px;font-weight:600}
+.awards-box p{font-size:12px;color:var(--text-secondary);line-height:1.8}
+
+/* Timeline */
+.tl-container{position:relative;padding:16px 0}
+.tl-line{position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,transparent,rgba(224,122,58,.15) 8%,rgba(224,122,58,.15) 92%,transparent);transform:translateX(-50%)}
+.tl-header{display:grid;grid-template-columns:1fr 1fr;gap:36px;margin-bottom:24px;text-align:center}
+.tl-header .col-title{font-size:12px;color:var(--text-dim);letter-spacing:3px;text-transform:uppercase}
+.tl-row{display:grid;grid-template-columns:1fr 1fr;gap:36px;position:relative;margin-bottom:28px}
+.tl-row::before{content:'';position:absolute;left:50%;top:20px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2.5px solid var(--accent);transform:translateX(-50%);z-index:2;transition:all .3s}
+.tl-row:hover::before{background:var(--accent);box-shadow:0 0 14px var(--accent-glow)}
+.tl-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:18px;box-shadow:var(--shadow);transition:all .4s;cursor:pointer;opacity:0;transform:translateY(18px)}
+.tl-card.visible{opacity:1;transform:translateY(0)}
+.tl-card:hover{border-color:var(--border-hover);box-shadow:var(--shadow-hover)}
+.tl-card .card-head{display:flex;align-items:center;gap:12px}
+.tl-card .card-logo{width:36px;height:36px;border-radius:8px;object-fit:contain;flex-shrink:0;background:var(--bg-soft);padding:4px}
+.tl-card .card-info{flex:1}
+.tl-card .card-time{font-family:var(--font-mono);font-size:11px;color:var(--accent);margin-bottom:2px}
+.tl-card .card-company{font-size:14px;font-weight:600;line-height:1.3}
+.tl-card .card-role{font-size:11px;color:var(--text-secondary);margin-top:2px}
+.tl-card .card-details{max-height:0;overflow:hidden;transition:max-height .4s ease,margin .3s ease,opacity .3s ease;opacity:0;margin-top:0}
+.tl-card .card-details.open{max-height:300px;opacity:1;margin-top:14px}
+.tl-card .card-highlights{list-style:none;padding:0;border-top:1px solid var(--border);padding-top:12px}
+.tl-card .card-highlights li{font-size:11px;color:var(--text-secondary);line-height:1.7;padding-left:13px;position:relative;margin-bottom:2px}
+.tl-card .card-highlights li::before{content:'›';position:absolute;left:0;color:var(--accent);font-weight:700}
+.tl-placeholder{min-height:50px}
+
+/* ===== PAGE 3: STARTUP ===== */
+.showcase-project{width:100%;max-width:1400px;margin:0 auto;padding:36px 48px 50px}
+.project-header{display:flex;align-items:center;gap:14px;margin-bottom:8px}
+.project-header .proj-logo{width:40px;height:40px;border-radius:10px;object-fit:contain;background:var(--bg-soft);padding:4px}
+.project-header h3{font-size:22px;font-weight:700}
+.project-badge{padding:4px 12px;border:1px solid var(--border-hover);border-radius:100px;font-size:11px;color:var(--accent);font-family:var(--font-mono)}
+.project-desc{color:var(--text-secondary);font-size:13px;line-height:1.8;max-width:700px;margin-bottom:6px}
+.project-role{font-size:12px;color:var(--accent);margin-bottom:20px}
+.project-stats{display:flex;gap:14px;margin-bottom:24px;flex-wrap:wrap}
+.stat-item{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:14px 20px;min-width:130px;box-shadow:var(--shadow);transition:all .3s}
+.stat-item:hover{border-color:var(--border-hover);transform:translateY(-2px);box-shadow:var(--shadow-hover)}
+.stat-item .stat-number{font-size:24px;color:var(--accent);font-weight:700}
+.stat-item .stat-label{font-size:10px;color:var(--text-dim);margin-top:2px}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+.gallery-item{aspect-ratio:4/3;background:var(--bg-soft);border:1px solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--text-dim);font-size:12px;transition:all .3s;overflow:hidden}
+.gallery-item:hover{border-color:var(--border-hover);transform:scale(1.02)}
+.xhs-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:var(--xhs-red);color:#fff;border:none;border-radius:100px;font-family:var(--font-body);font-size:13px;font-weight:600;cursor:pointer;transition:all .3s;text-decoration:none}
+.xhs-btn:hover{background:#e6102d;transform:translateY(-1px);box-shadow:0 4px 12px rgba(255,36,66,.25)}
+.xhs-btn svg{width:18px;height:18px}
+
+/* ===== PAGE 4: ABOUT ===== */
+.about-intro-screen{width:100%;height:calc(100vh - 70px);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.about-center-text{text-align:center;z-index:2;position:relative}
+.about-center-text h2{font-size:72px;font-weight:900;color:var(--text-primary);margin-bottom:8px}
+.about-center-text .sub{font-size:22px;color:var(--text-secondary);font-weight:400}
+.scroll-hint{position:absolute;bottom:40px;right:48px;display:flex;align-items:center;gap:10px;z-index:3;transition:opacity .4s}
+.scroll-hint.hidden{opacity:0;pointer-events:none}
+.scroll-hint svg{width:28px;height:28px}
+.scroll-hint span{font-size:22px;font-weight:900;color:var(--text-primary)}
+.spiral-ring{position:absolute;top:50%;left:50%;width:0;height:0;z-index:1}
+.spiral-word{position:absolute;font-family:var(--font-body);font-weight:900;letter-spacing:4px;user-select:none;white-space:nowrap;cursor:default;
+  color:#fff;
+  -webkit-text-stroke:2.5px #1a1a1a;
+  paint-order:stroke fill}
+
+/* Thought blocks */
+.thought-block{width:100%;max-width:1400px;margin:0 auto;padding:36px 48px 44px;opacity:0;transform:translateY(24px);transition:all .6s}
+.thought-block.visible{opacity:1;transform:translateY(0)}
+.thought-block-title{font-size:20px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.thought-block-subtitle{color:var(--text-dim);font-size:12px;margin-bottom:22px;font-style:italic}
+
+.ai-tools{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+.ai-tool-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:20px;box-shadow:var(--shadow);transition:all .3s}
+.ai-tool-card:hover{border-color:var(--border-hover);transform:translateY(-2px);box-shadow:var(--shadow-hover)}
+.ai-tool-card .tool-name{font-family:var(--font-mono);font-size:12px;color:var(--accent);margin-bottom:6px}
+.ai-tool-card .tool-desc{font-size:11px;color:var(--text-secondary);line-height:1.7}
+.ai-note{margin-top:18px;padding:16px 20px;background:var(--accent-light);border:1px solid var(--border-hover);border-radius:12px;font-size:12px;color:var(--text-secondary);line-height:1.8}
+.ai-note strong{color:var(--accent)}
+
+.growth-tl{position:relative;padding-left:32px}
+.growth-tl::before{content:'';position:absolute;left:12px;top:0;bottom:0;width:2px;background:var(--accent-light)}
+.growth-item{position:relative;margin-bottom:24px;padding-left:18px}
+.growth-item::before{content:'';position:absolute;left:-27px;top:6px;width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.growth-item .gp{font-family:var(--font-mono);font-size:11px;color:var(--accent);margin-bottom:3px}
+.growth-item .gt{font-size:14px;font-weight:600;margin-bottom:3px}
+.growth-item .gd{font-size:12px;color:var(--text-secondary);line-height:1.7}
+
+.interests-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.interest-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:22px;box-shadow:var(--shadow);transition:all .3s}
+.interest-card:hover{border-color:var(--border-hover);transform:translateY(-2px);box-shadow:var(--shadow-hover)}
+.interest-card .interest-icon{font-size:24px;margin-bottom:8px}
+.interest-card .interest-name{font-size:14px;font-weight:600;margin-bottom:4px}
+.interest-card .interest-desc{font-size:11px;color:var(--text-secondary);line-height:1.7}
+
+.photo-gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.photo-item{aspect-ratio:1;background:var(--bg-soft);border:1px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--text-dim);font-size:11px;transition:all .4s;overflow:hidden}
+.photo-item:hover{border-color:var(--accent);transform:scale(1.04);z-index:2}
+.photo-item:nth-child(1){grid-column:span 2;grid-row:span 2}
+
+/* ===== CONTACT BAR (in-flow) ===== */
+.contact-bar{width:100%;background:var(--bg-soft);border-top:1px solid var(--border);padding:28px 48px;margin-top:20px}
+.contact-bar-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:40px}
+.contact-title{font-size:15px;font-weight:900;color:var(--text-primary);white-space:nowrap}
+.contact-item{position:relative;display:flex;align-items:center;gap:7px;cursor:pointer;color:var(--text-secondary);font-size:13px;transition:color .3s}
+.contact-item:hover{color:var(--accent)}
+.contact-item svg{width:20px;height:20px;transition:transform .3s}
+.contact-item:hover svg{transform:translateY(-2px)}
+.contact-popup{position:absolute;bottom:46px;left:50%;transform:translateX(-50%) translateY(8px);background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:12px 16px;box-shadow:0 8px 30px rgba(0,0,0,.12);opacity:0;pointer-events:none;transition:all .3s;white-space:nowrap;font-size:13px;color:var(--text-primary);font-family:var(--font-mono)}
+.contact-popup::after{content:'';position:absolute;bottom:-6px;left:50%;transform:translateX(-50%) rotate(45deg);width:12px;height:12px;background:var(--bg-card);border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+.contact-item:hover .contact-popup{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.contact-popup.qr-popup{padding:14px;text-align:center}
+.contact-popup.qr-popup img{width:130px;height:130px;border-radius:6px;margin-bottom:6px}
+.contact-popup.qr-popup .qr-label{font-size:11px;color:var(--text-dim);font-family:var(--font-body)}
+
+/* ===== FOOTER ===== */
+.page-footer{width:100%;max-width:1400px;margin:0 auto;padding:24px 48px 32px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.page-footer .footer-left{font-size:11px;color:var(--text-dim);font-family:var(--font-mono)}
+.page-footer .claude-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border:1px solid var(--border);border-radius:100px;margin-top:5px;color:var(--text-dim);font-size:10px;transition:all .3s}
+.page-footer .claude-badge:hover{border-color:var(--accent);color:var(--accent)}
+.page-footer .footer-right{font-size:11px;color:var(--text-dim)}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  .nav-inner{padding:14px 16px 10px}
+  .nav-logo{font-size:14px}
+  .tab-btn{font-size:12px;padding:5px 12px}
+  .nav-sep{margin:0 2px}
+  .dl-btn{padding:6px 12px;font-size:11px}
+  .dl-btn .dl-text{display:none}
+  .home-avatar-area img{width:220px}
+  .kw-ring{width:360px;height:360px}
+  .kw-word{font-size:16px!important}
+  .home-text{position:relative;bottom:auto;left:auto;padding:20px 20px 40px;text-align:center;max-width:100%}
+  .content-section,.showcase-project,.thought-block{padding-left:20px;padding-right:20px}
+  .info-grid{grid-template-columns:1fr;text-align:center}
+  .info-photo{margin:0 auto}
+  .core-tags{justify-content:center}
+  .info-meta{justify-content:center}
+  .edu-grid{grid-template-columns:1fr}
+  .tl-header{display:none}
+  .tl-line{left:16px}
+  .tl-row{grid-template-columns:1fr;padding-left:36px;gap:10px}
+  .tl-row::before{left:16px}
+  .tl-placeholder{display:none}
+  .gallery-grid{grid-template-columns:1fr 1fr}
+  .ai-tools{grid-template-columns:1fr}
+  .interests-grid{grid-template-columns:1fr}
+  .photo-gallery{grid-template-columns:repeat(2,1fr)}
+  .contact-bar-inner{gap:20px;padding:0 16px}
+  .contact-item .contact-label{display:none}
+  .page-footer{flex-direction:column;gap:10px;text-align:center;padding:16px 20px 24px}
+  .about-center-text h2{font-size:26px}
+  .page-hero{padding:50px 20px 20px}
+}
+</style>
+</head>
+<body>
+<div class="glow-bg"><div class="glow-orb o1"></div><div class="glow-orb o2"></div><div class="glow-orb o3"></div></div>
+
+<!-- NAV -->
+<nav><div class="nav-inner">
+<div class="nav-logo">胡一平个人网站</div>
+<div class="nav-tabs">
+<button class="tab-btn active" data-page="page-home">首页</button>
+<span class="nav-sep">/</span>
+<button class="tab-btn" data-page="page-resume">个人简介</button>
+<span class="nav-sep">/</span>
+<button class="tab-btn" data-page="page-startup">成果展示</button>
+<span class="nav-sep">/</span>
+<button class="tab-btn" data-page="page-about">关于我</button>
+</div>
+<a class="dl-btn" href="#" download>
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+<span class="dl-text">下载简历</span>
+</a>
+</div></nav>
+
+<!-- ============ PAGE 1: HOME ============ -->
+<div class="page active" id="page-home">
+<div class="home-wrap">
+<div class="kw-tracks" id="kwTracks"></div>
+<div class="home-avatar-area">
+<img src="avatar.png" alt="胡一平 Evan">
+</div>
+<div class="home-text">
+<div class="welcome"><span class="emoji">👋</span> 欢迎你来查看 胡一平 的个人网站</div>
+<p class="desc">从城市森林到谈判桌前，寻姹紫嫣红，赏满天星斗，我一直在尝试把好奇心变成可落地的事。我相信最好的销售是能把技术翻译成客户听得懂的话，而AI正在让这件事变得更有趣。这个网站就是用 Claude Code 搭的——与其说我会用AI，不如你直接来看。</p>
+</div>
+</div>
+
+<!-- Contact bar at bottom of home -->
+<div class="contact-bar" id="contactBar"></div>
+<footer class="page-footer"><div class="footer-left">© 2026 胡一平 Evan<div class="claude-badge">⚡ Built with Claude Code</div></div><div class="footer-right">MaaS Sales · Open to Opportunities</div></footer>
+</div>
+
+<!-- ============ PAGE 2: RESUME ============ -->
+<div class="page" id="page-resume">
+<div class="page-hero"><h2>个人简介</h2><p class="subtitle">从工程力学到AI销售，每一步都在靠近自己想做的事</p></div>
+<section class="content-section">
+<h3 class="section-title">基本信息</h3>
+<div class="info-grid">
+<div class="info-photo"><img src="avatar.png" alt="胡一平"></div>
+<div class="info-details">
+<h3>胡一平</h3>
+<div class="en-name">Evan</div>
+<div class="info-meta"><div>🎂 1999.02</div><div>📍 中国北京</div></div>
+<div class="core-tags">
+<span class="core-tag">销售全闭环</span><span class="core-tag">AI 产品销售经验</span><span class="core-tag">创业实战者</span><span class="core-tag">LLM 深度用户</span>
+</div>
+</div>
+</div>
+</section>
+<div class="divider"><div class="divider-line"></div></div>
+<section class="content-section">
+<h3 class="section-title">教育经历</h3>
+<div class="edu-grid">
+<div class="edu-card">
+<img class="edu-logo" src="university-logo.jpg" alt="矿大">
+<div><div class="school">中国矿业大学（北京）</div><div class="major">工程力学</div><div class="time">2017.09 — 2021.06</div><span class="degree-badge">本科学士 · 211 双一流</span></div>
+</div>
+<div class="edu-card">
+<img class="edu-logo" src="university-logo.jpg" alt="矿大">
+<div><div class="school">中国矿业大学（北京）</div><div class="major">土木工程</div><div class="time">2021.09 — 2023.06</div><span class="degree-badge">第二学士 · 211 双一流</span></div>
+</div>
+</div>
+<div class="awards-box"><h4>在校荣誉 & 校园经历</h4><p>"挑战杯"首都大学生创业竞赛银奖 · 校营销大赛冠军 · 校学生会主席 · 优秀主席/部长/干事<br>任期内承办110周年校庆系列庆典、校园十佳歌手大赛、校园创意市集、迎新晚会、主持人大赛、一二九大合唱等大型活动</p></div>
+</section>
+<div class="divider"><div class="divider-line"></div></div>
+<section class="content-section">
+<h3 class="section-title">经历时间轴</h3>
+<div class="tl-container">
+<div class="tl-line"></div>
+<div class="tl-header"><div class="col-title">工作经历</div><div class="col-title">创业经历</div></div>
+
+<div class="tl-row"><div class="tl-placeholder"></div>
+<div class="tl-card" data-dir="right"><div class="card-head"><img class="card-logo" src="ac-logo.jpg" alt="AC"><div class="card-info"><div class="card-time">2022.04 — 2024.06</div><div class="card-company">AC露营社</div><div class="card-role">创业合伙人</div></div></div><div class="card-details"><ul class="card-highlights"><li>独立提出「露营第一站，AC做伙伴」品牌slogan</li><li>策划线下活动8场，落地清北等8所高校，场均拉新300+人</li><li>联名营销9场，KOL渠道获客1000+</li><li>承接企业露营租赁20+单</li><li>接受CCTV英文频道露营行业专题采访</li></ul></div></div></div>
+
+<div class="tl-row">
+<div class="tl-card" data-dir="left"><div class="card-head"><img class="card-logo" src="cscec-logo.png" alt="中建"><div class="card-info"><div class="card-time">2023.07 — 2024.06</div><div class="card-company">中建四局北京公司总承包分公司</div><div class="card-role">党群活动专员 & 技术工程师</div></div></div><div class="card-details"><ul class="card-highlights"><li>将二十四节气与国际节日纳入企划日历并落地执行</li><li>参与全流程投标4次，成功中标2次</li><li>转正考核排名第一 · 2023年度京青年之星</li></ul></div></div>
+<div class="tl-placeholder"></div></div>
+
+<div class="tl-row">
+<div class="tl-card" data-dir="left"><div class="card-head"><img class="card-logo" src="vastdata-logo.png" alt="海量"><div class="card-info"><div class="card-time">2024.06 — 2025.04</div><div class="card-company">北京海量数据技术股份有限公司</div><div class="card-role">数字政府行业经理</div></div></div><div class="card-details"><ul class="card-highlights"><li>客户关系拓新20+，落地商机10+</li><li>新拓合作ISV厂商16家，带来项目机会10+次</li><li>面向客户进行AI科普，建立AI+数据库认知基础</li></ul></div></div>
+<div class="tl-placeholder"></div></div>
+
+<div class="tl-row"><div class="tl-placeholder"></div>
+<div class="tl-card" data-dir="right"><div class="card-head"><img class="card-logo" src="stellren-logo.jpeg" alt="星见"><div class="card-info"><div class="card-time">2025.04 — 2026.03</div><div class="card-company">星见 StelRen</div><div class="card-role">商业化负责人</div></div></div><div class="card-details"><ul class="card-highlights"><li>构建「线上引流+线下变现+游学延展」分层商业模型</li><li>设计价格梯度产品矩阵，客单价覆盖200–2000元</li><li>线上讲座11场，线下活动15场，覆盖6省市</li></ul></div></div></div>
+
+</div>
+</section>
+<div class="contact-bar" id="contactBar2"></div>
+<footer class="page-footer"><div class="footer-left">© 2026 胡一平 Evan<div class="claude-badge">⚡ Built with Claude Code</div></div><div class="footer-right">MaaS Sales · Open to Opportunities</div></footer>
+</div>
+
+<!-- ============ PAGE 3: STARTUP ============ -->
+<div class="page" id="page-startup">
+<div class="page-hero"><h2>成果展示</h2><p class="subtitle">从校园露营到星空文旅，每一次创业都是从0到1的探索</p></div>
+<div class="divider"><div class="divider-line"></div></div>
+<section class="showcase-project">
+<div class="project-header">
+<img class="proj-logo" src="stellren-logo.jpeg" alt="星见">
+<h3>星见 StelRen</h3><span class="project-badge">2025.04 — 2026.03</span>
+</div>
+<p class="project-desc">清华背景观星文旅创业项目，致力于将天文科普与深度旅行结合，打造高品质暗夜体验与人文游学产品。</p>
+<p class="project-role">我的角色：商业化负责人 — 主导商业模型设计、产品体系搭建、定价策略、ToB资源拓展与活动落地执行</p>
+<div class="project-stats"><div class="stat-item"><div class="stat-number">15</div><div class="stat-label">线下活动场次</div></div><div class="stat-item"><div class="stat-number">11</div><div class="stat-label">线上讲座</div></div><div class="stat-item"><div class="stat-number">6</div><div class="stat-label">覆盖省市</div></div><div class="stat-item"><div class="stat-number">200–2000</div><div class="stat-label">产品客单价区间 (元)</div></div></div>
+<div class="gallery-grid"><div class="gallery-item">活动照片 1 · 待补充</div><div class="gallery-item">活动照片 2 · 待补充</div><div class="gallery-item">活动照片 3 · 待补充</div></div>
+<a class="xhs-btn" href="https://www.xiaohongshu.com/user/profile/65b61b43000000000d01d557?xsec_token=AB3hOIoLoJbHT4F9uBook_dKtPeO3Goc4WjKLLeAQWQyA%3D&xsec_source=pc_search" target="_blank">
+<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-1v-1h-1v-3h1v-1h2v1h1v3h-1v1h-1zm3-7h-1v1h-3V9h1V8h3v1h1v3h-1v-1z"/></svg>
+<span>小红书主页</span>
+</a>
+</section>
+<div class="divider"><div class="divider-line"></div></div>
+<section class="showcase-project">
+<div class="project-header">
+<img class="proj-logo" src="ac-logo.jpg" alt="AC">
+<h3>AC露营社</h3><span class="project-badge">2022.04 — 2024.06</span>
+</div>
+<p class="project-desc">一站式露营服务创业项目，为高校学生和年轻群体提供装备租赁、活动策划与露营体验服务。</p>
+<p class="project-role">我的角色：创业合伙人 — 负责品牌策划、线下活动执行、KOL渠道合作与ToB销售拓展</p>
+<div class="project-stats"><div class="stat-item"><div class="stat-number">8</div><div class="stat-label">校园活动场次</div></div><div class="stat-item"><div class="stat-number">300+</div><div class="stat-label">场均社群拉新</div></div><div class="stat-item"><div class="stat-number">1000+</div><div class="stat-label">KOL渠道获客</div></div><div class="stat-item"><div class="stat-number">CCTV</div><div class="stat-label">英文频道专题采访</div></div></div>
+<div class="gallery-grid"><div class="gallery-item">活动照片 1 · 待补充</div><div class="gallery-item">活动照片 2 · 待补充</div><div class="gallery-item">活动照片 3 · 待补充</div></div>
+<a class="xhs-btn" href="https://www.xiaohongshu.com/user/profile/61c2f9ad00000000100089da?xsec_token=ABzyV1gnHPtD4EEzVFQAqbOWQLUsvk9sM23X4DHa3f5-M%3D&xsec_source=pc_search" target="_blank">
+<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-1v-1h-1v-3h1v-1h2v1h1v3h-1v1h-1zm3-7h-1v1h-3V9h1V8h3v1h1v3h-1v-1z"/></svg>
+<span>小红书主页</span>
+</a>
+</section>
+<div class="contact-bar" id="contactBar3"></div>
+<footer class="page-footer"><div class="footer-left">© 2026 胡一平 Evan<div class="claude-badge">⚡ Built with Claude Code</div></div><div class="footer-right">MaaS Sales · Open to Opportunities</div></footer>
+</div>
+
+<!-- ============ PAGE 4: ABOUT ============ -->
+<div class="page" id="page-about">
+<!-- Intro screen with spiral -->
+<div class="about-intro-screen" id="aboutIntro">
+<div class="about-center-text">
+<h2>关于我</h2>
+<div class="sub">不只是一份简历，而是一个鲜活的人</div>
+</div>
+<div class="spiral-ring" id="spiralRing"></div>
+<div class="scroll-hint" id="scrollHint">
+<svg viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="18" rx="6"/><line x1="12" y1="8" x2="12" y2="10"/></svg>
+<span>滚动鼠标滑轮，帮我摘掉标签</span>
+</div>
+</div>
+
+<!-- Scrollable content -->
+<div id="aboutContent" style="position:relative">
+<div class="divider"><div class="divider-line"></div></div>
+<section class="thought-block" id="block-ai">
+<div class="thought-block-title">⚡ 我与 AI</div>
+<div class="thought-block-subtitle">工具改变工作方式，认知决定使用深度</div>
+<p style="font-size:13px;color:var(--text-secondary);line-height:1.9;margin-bottom:14px">我是大模型工具的日常深度用户。ChatGPT 和 Claude 已经融入我的工作流 — 从市场调研、竞品分析到客户方案撰写、活动策划文案，AI 不是我偶尔尝鲜的玩具，而是每天都在用的生产力工具。</p>
+<div class="ai-tools">
+<div class="ai-tool-card"><div class="tool-name">场景一：市场调研</div><div class="tool-desc">待补充</div></div>
+<div class="ai-tool-card"><div class="tool-name">场景二：方案撰写</div><div class="tool-desc">待补充</div></div>
+<div class="ai-tool-card"><div class="tool-name">场景三：内容创作</div><div class="tool-desc">待补充</div></div>
+</div>
+<div class="ai-note"><strong>关于这个网站：</strong>你正在浏览的这个个人网站，从设计到代码，全程由 Claude Code 独立构建。这本身就是我 AI 实践能力的一个证明 — 我相信未来的销售不只是懂产品，更要懂得用 AI 重塑自己的工作方式。</div>
+</section>
+
+<div class="divider"><div class="divider-line"></div></div>
+<section class="thought-block" id="block-growth">
+<div class="thought-block-title">🌱 我的成长轨迹</div>
+<div class="thought-block-subtitle">每一次转变背后的思考</div>
+<div class="growth-tl">
+<div class="growth-item"><div class="gp">2017 — 2021</div><div class="gt">工程力学 · 理工科的底层训练</div><div class="gd">待补充</div></div>
+<div class="growth-item"><div class="gp">2021 — 2023</div><div class="gt">第二学位 & 创业启蒙</div><div class="gd">待补充</div></div>
+<div class="growth-item"><div class="gp">2023 — 2024</div><div class="gt">从工程师到销售的转身</div><div class="gd">待补充</div></div>
+<div class="growth-item"><div class="gp">2024 — 至今</div><div class="gt">AI 时代的销售</div><div class="gd">待补充</div></div>
+</div>
+</section>
+
+<div class="divider"><div class="divider-line"></div></div>
+<section class="thought-block" id="block-interests">
+<div class="thought-block-title">🎯 兴趣与生活</div>
+<div class="thought-block-subtitle">工作之外，这些事情让我保持好奇</div>
+<div class="interests-grid">
+<div class="interest-card"><div class="interest-icon">📷</div><div class="interest-name">摄影</div><div class="interest-desc">待补充</div></div>
+<div class="interest-card"><div class="interest-icon">⛺</div><div class="interest-name">户外露营</div><div class="interest-desc">待补充</div></div>
+<div class="interest-card"><div class="interest-icon">🌌</div><div class="interest-name">观星</div><div class="interest-desc">待补充</div></div>
+<div class="interest-card"><div class="interest-icon">✍️</div><div class="interest-name">待补充</div><div class="interest-desc">待补充</div></div>
+</div>
+</section>
+
+<div class="divider"><div class="divider-line"></div></div>
+<section class="thought-block" id="block-photography">
+<div class="thought-block-title">🖼 摄影作品</div>
+<div class="thought-block-subtitle">用镜头记录世界的方式</div>
+<div class="photo-gallery">
+<div class="photo-item">作品 1 · 待补充</div><div class="photo-item">作品 2</div><div class="photo-item">作品 3</div><div class="photo-item">作品 4</div><div class="photo-item">作品 5</div><div class="photo-item">作品 6</div><div class="photo-item">作品 7</div>
+</div>
+</section>
+</div>
+
+<div class="contact-bar" id="contactBar4"></div>
+<footer class="page-footer"><div class="footer-left">© 2026 胡一平 Evan<div class="claude-badge">⚡ Built with Claude Code</div></div><div class="footer-right">MaaS Sales · Open to Opportunities</div></footer>
+</div>
+
+<!-- ====== SCRIPTS ====== -->
+<script>
+// ---- Contact bar template ----
+const contactHTML = `
+<div class="contact-bar-inner">
+<span class="contact-title">联系我：</span>
+<div class="contact-item">
+<svg viewBox="0 0 24 24" fill="#1a1a1a" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" fill="#1a1a1a"/><path d="M16.5 12.87v1.59a1.06 1.06 0 01-1.16 1.06 10.5 10.5 0 01-4.58-1.63 10.35 10.35 0 01-3.18-3.18 10.5 10.5 0 01-1.63-4.6A1.06 1.06 0 017 5.06h1.59a1.06 1.06 0 011.06.91c.07.51.19 1.01.37 1.49a1.06 1.06 0 01-.24 1.12l-.67.67a8.49 8.49 0 003.18 3.18l.67-.67a1.06 1.06 0 011.12-.24c.48.17.98.3 1.49.37a1.06 1.06 0 01.91 1.08z" fill="none" stroke="#fff" stroke-width="1.5"/></svg>
+<span class="contact-label">电话</span>
+<div class="contact-popup">TEL: 18519747216</div>
+</div>
+<div class="contact-item">
+<svg viewBox="0 0 24 24" fill="#1a1a1a"><rect x="2" y="2" width="20" height="20" rx="5" fill="#1a1a1a"/><path d="M6 8l6 4.5L18 8" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="5.5" y="7" width="13" height="10" rx="1.5" fill="none" stroke="#fff" stroke-width="1.5"/></svg>
+<span class="contact-label">邮箱</span>
+<div class="contact-popup">Email: Huy1ping@126.com</div>
+</div>
+<div class="contact-item">
+<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 01.213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 00.167-.054l1.903-1.114a.864.864 0 01.717-.098 10.16 10.16 0 002.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 01-1.162 1.178A1.17 1.17 0 014.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 01-1.162 1.178 1.17 1.17 0 01-1.162-1.178c0-.651.52-1.18 1.162-1.18zm3.68 4.025c-3.837 0-6.958 2.578-6.958 5.758 0 3.187 3.12 5.769 6.958 5.769a8.13 8.13 0 002.272-.322.726.726 0 01.59.08l1.563.916a.267.267 0 00.138.044c.132 0 .24-.108.24-.243 0-.06-.023-.118-.038-.174l-.322-1.218a.49.49 0 01.176-.546C22.093 17.676 24 15.91 24 13.774c0-3.18-3.129-5.758-6.722-5.758zm-2.7 3.142a.96.96 0 01.958.97.96.96 0 01-.957.972.96.96 0 01-.957-.971.96.96 0 01.957-.971zm5.398 0a.96.96 0 01.958.97.96.96 0 01-.958.972.96.96 0 01-.957-.971.96.96 0 01.957-.971z"/></svg>
+<span class="contact-label">微信</span>
+<div class="contact-popup qr-popup"><img src="wechat-qr.png" alt="微信二维码"><div class="qr-label">扫码添加微信</div></div>
+</div>
+</div>`;
+document.querySelectorAll('.contact-bar').forEach(el => el.innerHTML = contactHTML);
+
+// ---- Tab Navigation ----
+const tabBtns = document.querySelectorAll('.tab-btn');
+const pages = document.querySelectorAll('.page');
+tabBtns.forEach(b => {
+  b.addEventListener('click', () => {
+    tabBtns.forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    pages.forEach(p => {
+      p.classList.remove('active');
+      if (p.id === b.dataset.page) { p.classList.add('active'); window.scrollTo({ top: 0 }); }
+    });
+    setTimeout(observeAll, 150);
+    // Reset spiral on re-entering about page
+    if (b.dataset.page === 'page-about') {
+      spiralProgress = 0;
+      spiralComplete = false;
+      scrollHintDismissed = false;
+      const hint = document.getElementById('scrollHint');
+      if (hint) hint.classList.remove('hidden');
+      updateSpiral();
+    }
+  });
+});
+
+// ---- Scroll observer ----
+function observeAll() {
+  const obs = new IntersectionObserver(e => { e.forEach(x => { if (x.isIntersecting) x.target.classList.add('visible'); }); }, { threshold: .1 });
+  document.querySelectorAll('.tl-card,.thought-block').forEach(el => obs.observe(el));
+}
+observeAll();
+
+// ---- Timeline accordion ----
+let openCard = null;
+document.querySelectorAll('.tl-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const det = card.querySelector('.card-details');
+    if (openCard && openCard !== det) { openCard.classList.remove('open'); }
+    det.classList.toggle('open');
+    openCard = det.classList.contains('open') ? det : null;
+  });
+  card.addEventListener('mouseenter', () => {
+    const det = card.querySelector('.card-details');
+    if (!det.classList.contains('open')) det.style.maxHeight = '300px', det.style.opacity = '1', det.style.marginTop = '14px';
+  });
+  card.addEventListener('mouseleave', () => {
+    const det = card.querySelector('.card-details');
+    if (!det.classList.contains('open')) det.style.maxHeight = '0', det.style.opacity = '0', det.style.marginTop = '0';
+  });
+});
+
+// ---- Home: 3-track semicircle keywords ----
+(function() {
+  const container = document.getElementById('kwTracks');
+  // 3 tracks, 2 words each, same font size
+  // Angle spreads: inner=90°, mid=105°, outer=120°
+  const tracks = [
+    { radius: 560, spread: 90, dir: 1 },
+    { radius: 740, spread: 105, dir: -1 },
+    { radius: 920, spread: 120, dir: 1 },
+  ];
+  const wordPairs = [
+    ['AI爱好者', '销售能手'],
+    ['户外露营', '创业经验'],
+    ['观星文旅', '点子大王'],
+  ];
+  const fontSize = 54;
+  const uniformDur = 8; // same duration = same angular velocity
+
+  tracks.forEach((track, ti) => {
+    const trackEl = document.createElement('div');
+    trackEl.className = 'kw-track';
+    const animName = `trackSwing${ti}`;
+    const deg = 20;
+    const style = document.createElement('style');
+    style.textContent = `@keyframes ${animName}{0%,100%{transform:rotate(${-deg * track.dir}deg)}50%{transform:rotate(${deg * track.dir}deg)}}`;
+    document.head.appendChild(style);
+    trackEl.style.animation = `${animName} ${uniformDur}s ease-in-out infinite`;
+
+    const halfSpread = track.spread / 2;
+    // Center of spread is at -90 (top), words at -90 ± halfSpread/2 with jitter
+    const centerAngle = -90;
+    const angles = [centerAngle - halfSpread, centerAngle + halfSpread];
+
+    wordPairs[ti].forEach((text, wi) => {
+      const el = document.createElement('div');
+      el.className = 'kw-word';
+      el.textContent = text;
+      el.style.fontSize = fontSize + 'px';
+
+      const jitter = Math.random() * 10 - 5;
+      const angle = angles[wi] + jitter;
+      const rad = angle * Math.PI / 180;
+      const x = track.radius * Math.cos(rad);
+      const y = track.radius * Math.sin(rad);
+      const tangentAngle = angle + 90;
+      el.style.left = x + 'px';
+      el.style.top = y + 'px';
+      el.style.transform = `translate(-50%,-50%) rotate(${tangentAngle}deg)`;
+      trackEl.appendChild(el);
+    });
+
+    container.appendChild(trackEl);
+  });
+})();
+
+// ---- About page: 4-circle scattered keywords (static until scroll) ----
+const spiralWords = ['户外露营', '观星文旅', 'AI爱好者', '销售能手', '创业经验', '点子大王'];
+const spiralEls = [];
+let spiralProgress = 0;
+const SPIRAL_MAX = 690;
+let scrollHintDismissed = false;
+let spiralComplete = false;
+const spiralFontSize = 46;
+
+(function initSpiral() {
+  const ring = document.getElementById('spiralRing');
+  const trackRadii = [200, 340, 460, 650];
+  const assignments = [
+    { track: 0, angleBase: 40 },
+    { track: 0, angleBase: 220 },
+    { track: 1, angleBase: 110 },
+    { track: 1, angleBase: 300 },
+    { track: 2, angleBase: 170 },
+    { track: 3, angleBase: 350 },
+  ];
+
+  spiralWords.forEach((text, i) => {
+    const el = document.createElement('div');
+    el.className = 'spiral-word';
+    el.textContent = text;
+    el.style.fontSize = spiralFontSize + 'px';
+    ring.appendChild(el);
+
+    const a = assignments[i];
+    const jitter = Math.random() * 30 - 15;
+    const angle = a.angleBase + jitter;
+    const radius = trackRadii[a.track] + (Math.random() * 25 - 12);
+    const tangent = angle + 90;
+    spiralEls.push({ el, baseAngle: angle, baseRadius: radius, tangent });
+  });
+  updateSpiral();
+})();
+
+function updateSpiral() {
+  const t = Math.max(0, Math.min(1, spiralProgress / SPIRAL_MAX));
+  let allGone = true;
+  spiralEls.forEach(item => {
+    const angle = item.baseAngle + t * 400;
+    const radius = item.baseRadius + t * 800;
+    const rad = angle * Math.PI / 180;
+    const x = radius * Math.cos(rad);
+    const y = radius * Math.sin(rad);
+    const rot = item.tangent + t * 400;
+    const opacity = 1 - t * 1.3;
+    const clampedOpacity = Math.max(0, opacity);
+    item.el.style.transform = `translate(calc(${x}px - 50%), calc(${y}px - 50%)) rotate(${rot}deg)`;
+    item.el.style.opacity = clampedOpacity;
+    if (clampedOpacity > 0) allGone = false;
+  });
+
+  // Once all words invisible, mark spiral as complete so page unlocks
+  if (allGone && !spiralComplete) {
+    spiralComplete = true;
+    const hint = document.getElementById('scrollHint');
+    if (hint && !scrollHintDismissed) {
+      scrollHintDismissed = true;
+      hint.classList.add('hidden');
+    }
+  }
+}
+
+// Scroll hijack for about page
+window.addEventListener('wheel', (e) => {
+  const aboutPage = document.getElementById('page-about');
+  if (!aboutPage.classList.contains('active')) return;
+
+  const introScreen = document.getElementById('aboutIntro');
+  const rect = introScreen.getBoundingClientRect();
+
+  // Only hijack scroll if spiral animation not complete
+  if (rect.bottom > 100 && !spiralComplete) {
+    if (e.deltaY > 0) {
+      e.preventDefault();
+      spiralProgress = Math.min(SPIRAL_MAX, spiralProgress + e.deltaY * 0.8);
+      updateSpiral();
+    }
+  }
+
+  // Allow reverse scroll to bring words back
+  if (window.scrollY < 10 && e.deltaY < 0 && spiralProgress > 0) {
+    e.preventDefault();
+    spiralProgress = Math.max(0, spiralProgress + e.deltaY * 0.8);
+    spiralComplete = false;
+    updateSpiral();
+  }
+}, { passive: false });
+</script>
+</body>
+</html>
