@@ -78,46 +78,45 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(254,254,254,
 .info-grid{display:grid;grid-template-columns:180px 1fr;gap:36px;align-items:start;margin-bottom:36px}
 .info-photo{width:160px;height:200px;border-radius:14px;overflow:hidden;border:2px solid var(--border);box-shadow:var(--shadow)}
 .info-photo img{width:100%;height:100%;object-fit:cover}
-.info-details h3{font-size:26px;font-weight:700;margin-bottom:2px}
-.info-details .en-name{font-weight:600;color:var(--accent);font-size:16px;margin-bottom:10px}
-.info-meta{display:flex;flex-wrap:wrap;gap:14px;color:var(--text-secondary);font-size:13px;margin-bottom:14px}
-.core-tags{display:flex;flex-wrap:wrap;gap:7px}
-.core-tag{padding:4px 13px;border:1px solid var(--border-hover);border-radius:100px;font-size:11px;color:var(--accent);background:var(--accent-light);transition:all .3s}
+.info-details h3{font-size:32px;font-weight:700;margin-bottom:2px}
+.info-details .en-name{font-weight:600;color:var(--accent);font-size:20px;margin-bottom:10px}
+.info-meta{display:flex;flex-wrap:wrap;gap:14px;color:var(--text-secondary);font-size:16px;margin-bottom:14px}
+.core-tags{display:flex;flex-wrap:wrap;gap:8px}
+.core-tag{padding:6px 16px;border:1px solid var(--border-hover);border-radius:100px;font-size:14px;color:var(--accent);background:var(--accent-light);transition:all .3s}
 .core-tag:hover{background:var(--accent-glow);transform:translateY(-1px)}
 
-.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
-.edu-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:20px;box-shadow:var(--shadow);transition:all .3s;display:flex;align-items:center;gap:16px}
-.edu-card:hover{border-color:var(--border-hover);box-shadow:var(--shadow-hover);transform:translateY(-2px)}
-.edu-card .edu-logo{width:48px;height:48px;border-radius:50%;object-fit:cover;flex-shrink:0}
-.edu-card .school{font-size:14px;font-weight:500;margin-bottom:2px}
-.edu-card .major{color:var(--accent);font-size:12px;margin-bottom:2px}
-.edu-card .time{color:var(--text-dim);font-size:11px;font-family:var(--font-mono)}
-.edu-card .degree-badge{display:inline-block;padding:2px 8px;background:var(--accent-light);border-radius:4px;font-size:10px;color:var(--accent);margin-top:4px}
-.awards-box{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:16px 20px;box-shadow:var(--shadow)}
-.awards-box h4{font-size:12px;color:var(--accent);margin-bottom:6px;font-weight:600}
-.awards-box p{font-size:12px;color:var(--text-secondary);line-height:1.8}
+.edu-combined{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:24px;box-shadow:var(--shadow);display:flex;align-items:center;gap:24px;margin-bottom:18px;transition:all .3s}
+.edu-combined:hover{border-color:var(--border-hover);box-shadow:var(--shadow-hover);transform:translateY(-2px)}
+.edu-combined .edu-logo{width:80px;height:80px;border-radius:50%;object-fit:cover;flex-shrink:0}
+.edu-combined .edu-info{flex:1}
+.edu-combined .school{font-size:18px;font-weight:600;margin-bottom:8px}
+.edu-combined .degree-row{display:flex;gap:24px;flex-wrap:wrap}
+.edu-combined .degree-item{flex:1;min-width:200px}
+.edu-combined .major{color:var(--accent);font-size:15px;margin-bottom:2px}
+.edu-combined .time{color:var(--text-dim);font-size:13px;font-family:var(--font-mono)}
+.edu-combined .degree-badge{display:inline-block;padding:3px 10px;background:var(--accent-light);border-radius:4px;font-size:12px;color:var(--accent);margin-top:4px}
+.awards-box{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:20px 24px;box-shadow:var(--shadow)}
+.awards-box h4{font-size:15px;color:var(--accent);margin-bottom:8px;font-weight:600}
+.awards-box p{font-size:15px;color:var(--text-secondary);line-height:1.8}
 
 /* Timeline */
 .tl-container{position:relative;padding:16px 0}
 .tl-line{position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,transparent,rgba(224,122,58,.15) 8%,rgba(224,122,58,.15) 92%,transparent);transform:translateX(-50%)}
 .tl-header{display:grid;grid-template-columns:1fr 1fr;gap:36px;margin-bottom:24px;text-align:center}
-.tl-header .col-title{font-size:12px;color:var(--text-dim);letter-spacing:3px;text-transform:uppercase}
+.tl-header .col-title{font-size:14px;color:var(--text-dim);letter-spacing:3px;text-transform:uppercase}
 .tl-row{display:grid;grid-template-columns:1fr 1fr;gap:36px;position:relative;margin-bottom:28px}
-.tl-row::before{content:'';position:absolute;left:50%;top:20px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2.5px solid var(--accent);transform:translateX(-50%);z-index:2;transition:all .3s}
+.tl-row::before{content:'';position:absolute;left:50%;top:28px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2.5px solid var(--accent);transform:translateX(-50%);z-index:2;transition:all .3s}
 .tl-row:hover::before{background:var(--accent);box-shadow:0 0 14px var(--accent-glow)}
-.tl-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:18px;box-shadow:var(--shadow);transition:all .4s;cursor:pointer;opacity:0;transform:translateY(18px)}
+.tl-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:22px;box-shadow:var(--shadow);transition:all .4s;opacity:0;transform:translateY(18px);display:flex;align-items:flex-start;gap:18px}
 .tl-card.visible{opacity:1;transform:translateY(0)}
 .tl-card:hover{border-color:var(--border-hover);box-shadow:var(--shadow-hover)}
-.tl-card .card-head{display:flex;align-items:center;gap:12px}
-.tl-card .card-logo{width:36px;height:36px;border-radius:8px;object-fit:contain;flex-shrink:0;background:var(--bg-soft);padding:4px}
+.tl-card .card-logo{width:56px;height:56px;border-radius:10px;object-fit:contain;flex-shrink:0;background:var(--bg-soft);padding:6px}
 .tl-card .card-info{flex:1}
-.tl-card .card-time{font-family:var(--font-mono);font-size:11px;color:var(--accent);margin-bottom:2px}
-.tl-card .card-company{font-size:14px;font-weight:600;line-height:1.3}
-.tl-card .card-role{font-size:11px;color:var(--text-secondary);margin-top:2px}
-.tl-card .card-details{max-height:0;overflow:hidden;transition:max-height .4s ease,margin .3s ease,opacity .3s ease;opacity:0;margin-top:0}
-.tl-card .card-details.open{max-height:300px;opacity:1;margin-top:14px}
-.tl-card .card-highlights{list-style:none;padding:0;border-top:1px solid var(--border);padding-top:12px}
-.tl-card .card-highlights li{font-size:11px;color:var(--text-secondary);line-height:1.7;padding-left:13px;position:relative;margin-bottom:2px}
+.tl-card .card-time{font-family:var(--font-mono);font-size:13px;color:var(--accent);margin-bottom:3px}
+.tl-card .card-company{font-size:17px;font-weight:600;line-height:1.3}
+.tl-card .card-role{font-size:14px;color:var(--text-secondary);margin-top:3px;margin-bottom:10px}
+.tl-card .card-highlights{list-style:none;padding:0;border-top:1px solid var(--border);padding-top:10px}
+.tl-card .card-highlights li{font-size:14px;color:var(--text-secondary);line-height:1.7;padding-left:14px;position:relative;margin-bottom:3px}
 .tl-card .card-highlights li::before{content:'›';position:absolute;left:0;color:var(--accent);font-weight:700}
 .tl-placeholder{min-height:50px}
 
@@ -191,14 +190,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(254,254,254,
 .photo-item:nth-child(1){grid-column:span 2;grid-row:span 2}
 
 /* ===== CONTACT BAR (in-flow) ===== */
-.contact-bar{width:100%;background:var(--bg-soft);border-top:1px solid var(--border);padding:28px 48px;margin-top:20px}
+.contact-bar{width:100%;background:var(--bg-soft);border-top:1px solid var(--border);padding:28px 48px;margin-top:20px;position:relative;z-index:10}
 .contact-bar-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:40px}
 .contact-title{font-size:15px;font-weight:900;color:var(--text-primary);white-space:nowrap}
 .contact-item{position:relative;display:flex;align-items:center;gap:7px;cursor:pointer;color:var(--text-secondary);font-size:13px;transition:color .3s}
 .contact-item:hover{color:var(--accent)}
 .contact-item svg{width:20px;height:20px;transition:transform .3s}
 .contact-item:hover svg{transform:translateY(-2px)}
-.contact-popup{position:absolute;bottom:46px;left:50%;transform:translateX(-50%) translateY(8px);background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:12px 16px;box-shadow:0 8px 30px rgba(0,0,0,.12);opacity:0;pointer-events:none;transition:all .3s;white-space:nowrap;font-size:13px;color:var(--text-primary);font-family:var(--font-mono)}
+.contact-popup{position:absolute;bottom:46px;left:50%;transform:translateX(-50%) translateY(8px);background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:12px 16px;box-shadow:0 8px 30px rgba(0,0,0,.12);opacity:0;pointer-events:none;transition:all .3s;white-space:nowrap;font-size:13px;color:var(--text-primary);font-family:var(--font-mono);z-index:20}
 .contact-popup::after{content:'';position:absolute;bottom:-6px;left:50%;transform:translateX(-50%) rotate(45deg);width:12px;height:12px;background:var(--bg-card);border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
 .contact-item:hover .contact-popup{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
 .contact-popup.qr-popup{padding:14px;text-align:center}
@@ -288,7 +287,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(254,254,254,
 
 <!-- ============ PAGE 2: RESUME ============ -->
 <div class="page" id="page-resume">
-<div class="page-hero"><h2>个人简介</h2><p class="subtitle">从工程力学到AI销售，每一步都在靠近自己想做的事</p></div>
+<div class="page-hero"><h2>个人简介</h2></div>
 <section class="content-section">
 <h3 class="section-title">基本信息</h3>
 <div class="info-grid">
@@ -306,14 +305,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(254,254,254,
 <div class="divider"><div class="divider-line"></div></div>
 <section class="content-section">
 <h3 class="section-title">教育经历</h3>
-<div class="edu-grid">
-<div class="edu-card">
+<div class="edu-combined">
 <img class="edu-logo" src="university-logo.jpg" alt="矿大">
-<div><div class="school">中国矿业大学（北京）</div><div class="major">工程力学</div><div class="time">2017.09 — 2021.06</div><span class="degree-badge">本科学士 · 211 双一流</span></div>
+<div class="edu-info">
+<div class="school">中国矿业大学（北京）</div>
+<div class="degree-row">
+<div class="degree-item"><div class="major">工程力学</div><div class="time">2017.09 — 2021.06</div><span class="degree-badge">本科学士 · 211 双一流</span></div>
+<div class="degree-item"><div class="major">土木工程</div><div class="time">2021.09 — 2023.06</div><span class="degree-badge">第二学士 · 211 双一流</span></div>
 </div>
-<div class="edu-card">
-<img class="edu-logo" src="university-logo.jpg" alt="矿大">
-<div><div class="school">中国矿业大学（北京）</div><div class="major">土木工程</div><div class="time">2021.09 — 2023.06</div><span class="degree-badge">第二学士 · 211 双一流</span></div>
 </div>
 </div>
 <div class="awards-box"><h4>在校荣誉 & 校园经历</h4><p>"挑战杯"首都大学生创业竞赛银奖 · 校营销大赛冠军 · 校学生会主席 · 优秀主席/部长/干事<br>任期内承办110周年校庆系列庆典、校园十佳歌手大赛、校园创意市集、迎新晚会、主持人大赛、一二九大合唱等大型活动</p></div>
@@ -326,18 +325,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(254,254,254,
 <div class="tl-header"><div class="col-title">工作经历</div><div class="col-title">创业经历</div></div>
 
 <div class="tl-row"><div class="tl-placeholder"></div>
-<div class="tl-card" data-dir="right"><div class="card-head"><img class="card-logo" src="ac-logo.jpg" alt="AC"><div class="card-info"><div class="card-time">2022.04 — 2024.06</div><div class="card-company">AC露营社</div><div class="card-role">创业合伙人</div></div></div><div class="card-details"><ul class="card-highlights"><li>独立提出「露营第一站，AC做伙伴」品牌slogan</li><li>策划线下活动8场，落地清北等8所高校，场均拉新300+人</li><li>联名营销9场，KOL渠道获客1000+</li><li>承接企业露营租赁20+单</li><li>接受CCTV英文频道露营行业专题采访</li></ul></div></div></div>
+<div class="tl-card" data-dir="right"><img class="card-logo" src="ac-logo.jpg" alt="AC"><div class="card-info"><div class="card-time">2022.04 — 2024.06</div><div class="card-company">AC露营社</div><div class="card-role">创业合伙人</div><ul class="card-highlights"><li>独立提出「露营第一站，AC做伙伴」品牌slogan</li><li>策划线下活动8场，落地清北等8所高校，场均拉新300+人</li><li>联名营销9场，KOL渠道获客1000+</li><li>承接企业露营租赁20+单</li><li>接受CCTV英文频道露营行业专题采访</li></ul></div></div></div>
 
 <div class="tl-row">
-<div class="tl-card" data-dir="left"><div class="card-head"><img class="card-logo" src="cscec-logo.png" alt="中建"><div class="card-info"><div class="card-time">2023.07 — 2024.06</div><div class="card-company">中建四局北京公司总承包分公司</div><div class="card-role">党群活动专员 & 技术工程师</div></div></div><div class="card-details"><ul class="card-highlights"><li>将二十四节气与国际节日纳入企划日历并落地执行</li><li>参与全流程投标4次，成功中标2次</li><li>转正考核排名第一 · 2023年度京青年之星</li></ul></div></div>
+<div class="tl-card" data-dir="left"><img class="card-logo" src="cscec-logo.png" alt="中建"><div class="card-info"><div class="card-time">2023.07 — 2024.06</div><div class="card-company">中建四局北京公司总承包分公司</div><div class="card-role">党群活动专员 & 技术工程师</div><ul class="card-highlights"><li>将二十四节气与国际节日纳入企划日历并落地执行</li><li>参与全流程投标4次，成功中标2次</li><li>转正考核排名第一 · 2023年度京青年之星</li></ul></div></div>
 <div class="tl-placeholder"></div></div>
 
 <div class="tl-row">
-<div class="tl-card" data-dir="left"><div class="card-head"><img class="card-logo" src="vastdata-logo.png" alt="海量"><div class="card-info"><div class="card-time">2024.06 — 2025.04</div><div class="card-company">北京海量数据技术股份有限公司</div><div class="card-role">数字政府行业经理</div></div></div><div class="card-details"><ul class="card-highlights"><li>客户关系拓新20+，落地商机10+</li><li>新拓合作ISV厂商16家，带来项目机会10+次</li><li>面向客户进行AI科普，建立AI+数据库认知基础</li></ul></div></div>
+<div class="tl-card" data-dir="left"><img class="card-logo" src="vastdata-logo.png" alt="海量"><div class="card-info"><div class="card-time">2024.06 — 2025.04</div><div class="card-company">北京海量数据技术股份有限公司</div><div class="card-role">数字政府行业经理</div><ul class="card-highlights"><li>客户关系拓新20+，落地商机10+</li><li>新拓合作ISV厂商16家，带来项目机会10+次</li><li>面向客户进行AI科普，建立AI+数据库认知基础</li></ul></div></div>
 <div class="tl-placeholder"></div></div>
 
 <div class="tl-row"><div class="tl-placeholder"></div>
-<div class="tl-card" data-dir="right"><div class="card-head"><img class="card-logo" src="stellren-logo.jpeg" alt="星见"><div class="card-info"><div class="card-time">2025.04 — 2026.03</div><div class="card-company">星见 StelRen</div><div class="card-role">商业化负责人</div></div></div><div class="card-details"><ul class="card-highlights"><li>构建「线上引流+线下变现+游学延展」分层商业模型</li><li>设计价格梯度产品矩阵，客单价覆盖200–2000元</li><li>线上讲座11场，线下活动15场，覆盖6省市</li></ul></div></div></div>
+<div class="tl-card" data-dir="right"><img class="card-logo" src="stellren-logo.jpeg" alt="星见"><div class="card-info"><div class="card-time">2025.04 — 2026.03</div><div class="card-company">星见 StelRen</div><div class="card-role">商业化负责人</div><ul class="card-highlights"><li>构建「线上引流+线下变现+游学延展」分层商业模型</li><li>设计价格梯度产品矩阵，客单价覆盖200–2000元</li><li>线上讲座11场，线下活动15场，覆盖6省市</li></ul></div></div></div>
 
 </div>
 </section>
@@ -347,7 +346,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(254,254,254,
 
 <!-- ============ PAGE 3: STARTUP ============ -->
 <div class="page" id="page-startup">
-<div class="page-hero"><h2>成果展示</h2><p class="subtitle">从校园露营到星空文旅，每一次创业都是从0到1的探索</p></div>
+<div class="page-hero"><h2>成果展示</h2></div>
 <div class="divider"><div class="divider-line"></div></div>
 <section class="showcase-project">
 <div class="project-header">
@@ -457,12 +456,12 @@ const contactHTML = `
 <div class="contact-bar-inner">
 <span class="contact-title">联系我：</span>
 <div class="contact-item">
-<svg viewBox="0 0 24 24" fill="#1a1a1a" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" fill="#1a1a1a"/><path d="M16.5 12.87v1.59a1.06 1.06 0 01-1.16 1.06 10.5 10.5 0 01-4.58-1.63 10.35 10.35 0 01-3.18-3.18 10.5 10.5 0 01-1.63-4.6A1.06 1.06 0 017 5.06h1.59a1.06 1.06 0 011.06.91c.07.51.19 1.01.37 1.49a1.06 1.06 0 01-.24 1.12l-.67.67a8.49 8.49 0 003.18 3.18l.67-.67a1.06 1.06 0 011.12-.24c.48.17.98.3 1.49.37a1.06 1.06 0 01.91 1.08z" fill="none" stroke="#fff" stroke-width="1.5"/></svg>
+<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>
 <span class="contact-label">电话</span>
 <div class="contact-popup">TEL: 18519747216</div>
 </div>
 <div class="contact-item">
-<svg viewBox="0 0 24 24" fill="#1a1a1a"><rect x="2" y="2" width="20" height="20" rx="5" fill="#1a1a1a"/><path d="M6 8l6 4.5L18 8" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="5.5" y="7" width="13" height="10" rx="1.5" fill="none" stroke="#fff" stroke-width="1.5"/></svg>
+<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
 <span class="contact-label">邮箱</span>
 <div class="contact-popup">Email: Huy1ping@126.com</div>
 </div>
@@ -504,25 +503,6 @@ function observeAll() {
   document.querySelectorAll('.tl-card,.thought-block').forEach(el => obs.observe(el));
 }
 observeAll();
-
-// ---- Timeline accordion ----
-let openCard = null;
-document.querySelectorAll('.tl-card').forEach(card => {
-  card.addEventListener('click', () => {
-    const det = card.querySelector('.card-details');
-    if (openCard && openCard !== det) { openCard.classList.remove('open'); }
-    det.classList.toggle('open');
-    openCard = det.classList.contains('open') ? det : null;
-  });
-  card.addEventListener('mouseenter', () => {
-    const det = card.querySelector('.card-details');
-    if (!det.classList.contains('open')) det.style.maxHeight = '300px', det.style.opacity = '1', det.style.marginTop = '14px';
-  });
-  card.addEventListener('mouseleave', () => {
-    const det = card.querySelector('.card-details');
-    if (!det.classList.contains('open')) det.style.maxHeight = '0', det.style.opacity = '0', det.style.marginTop = '0';
-  });
-});
 
 // ---- Home: 3-track semicircle keywords ----
 (function() {
