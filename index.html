@@ -47,10 +47,36 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(254,254,254,
 
 /* ===== PAGE 1: HOME ===== */
 .home-wrap{width:100%;height:calc(100vh - 70px);position:relative;overflow:hidden}
-.home-avatar-area{position:absolute;bottom:0;left:50%;transform:translateX(-50%);z-index:2}
+.home-avatar-area{position:absolute;bottom:0;left:50%;transform:translateX(-50%);z-index:2;perspective:1200px}
 .home-avatar-area img{height:80vh;width:auto;filter:drop-shadow(0 12px 40px rgba(0,0,0,.07))}
 
-/* Keyword tracks - 4 semicircle tracks, center = bottom-center of screen */
+/* Flip card */
+.flip-card{height:80vh;position:relative}
+.flip-card-inner{position:relative;width:100%;height:100%;transition:transform 0.8s cubic-bezier(.4,.2,.2,1);transform-style:preserve-3d}
+.flip-card-inner.flipped{transform:rotateY(180deg)}
+.flip-card-front,.flip-card-back{position:absolute;top:0;left:0;width:100%;height:100%;backface-visibility:hidden;display:flex;align-items:flex-end;justify-content:center}
+.flip-card-back{transform:rotateY(180deg)}
+.flip-card-front img,.flip-card-back img{height:100%;width:auto;filter:drop-shadow(0 12px 40px rgba(0,0,0,.07))}
+
+/* Home text - left corner */
+.home-text-left{position:absolute;bottom:28px;left:48px;z-index:3}
+.home-text-left .welcome{font-size:30px;font-weight:700;line-height:1.4;white-space:nowrap}
+.home-text-left .welcome .emoji{font-size:32px}
+
+/* Home text - right corner */
+.home-text-right{position:absolute;bottom:28px;right:48px;z-index:3;max-width:420px;text-align:right}
+.home-text-right .desc{font-size:14px;color:var(--text-secondary);line-height:1.9;margin-bottom:16px}
+
+/* Flip trigger - page curl */
+.flip-trigger{display:inline-flex;align-items:center;gap:10px;cursor:pointer;float:right}
+.page-curl{width:40px;height:40px;position:relative;overflow:hidden}
+.page-curl::before{content:'';position:absolute;bottom:0;right:0;width:0;height:0;border-style:solid;border-width:0 0 40px 40px;border-color:transparent transparent #ddd transparent;transition:border-color .3s}
+.page-curl::after{content:'';position:absolute;bottom:0;right:0;width:0;height:0;border-style:solid;border-width:0 0 30px 30px;border-color:transparent transparent #f5f5f5 transparent}
+.flip-trigger:hover .page-curl::before{border-color:transparent transparent var(--accent) transparent}
+.flip-label{font-size:13px;color:var(--text-dim);transition:color .3s;font-weight:500}
+.flip-trigger:hover .flip-label{color:var(--accent)}
+
+/* Keyword tracks */
 .kw-tracks{position:absolute;bottom:0;left:50%;width:0;height:0;z-index:1}
 .kw-track{position:absolute;bottom:0;left:0;width:0;height:0;transform-origin:0 0}
 .kw-word{position:absolute;font-family:var(--font-body);font-weight:900;letter-spacing:4px;user-select:none;white-space:nowrap;cursor:default;
@@ -58,11 +84,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(254,254,254,
   -webkit-text-stroke:2.5px #1a1a1a;
   paint-order:stroke fill;
   text-shadow:none}
-
-.home-text{position:absolute;bottom:48px;left:48px;z-index:3;max-width:480px}
-.home-text .welcome{font-size:30px;font-weight:700;margin-bottom:10px;line-height:1.4;white-space:nowrap}
-.home-text .welcome .emoji{font-size:32px}
-.home-text .desc{font-size:14px;color:var(--text-secondary);line-height:1.9}
 
 /* ===== COMMON ===== */
 .content-section{width:100%;max-width:1400px;margin:0 auto;padding:50px 48px}
@@ -272,11 +293,22 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(254,254,254,
 <div class="home-wrap">
 <div class="kw-tracks" id="kwTracks"></div>
 <div class="home-avatar-area">
-<img src="avatar.png" alt="胡一平 Evan">
+<div class="flip-card" id="flipCard">
+<div class="flip-card-inner" id="flipCardInner">
+<div class="flip-card-front"><img src="avatar.png" alt="胡一平 卡通形象"></div>
+<div class="flip-card-back"><img src="photo-real.png" alt="胡一平 真人照片"></div>
 </div>
-<div class="home-text">
+</div>
+</div>
+<div class="home-text-left">
 <div class="welcome"><span class="emoji">👋</span> 欢迎你来查看 胡一平 的个人网站</div>
-<p class="desc">从城市森林到谈判桌前，寻姹紫嫣红，赏满天星斗，我一直在尝试把好奇心变成可落地的事。我相信最好的销售是能把技术翻译成客户听得懂的话，而AI正在让这件事变得更有趣。这个网站就是用 Claude Code 搭的——与其说我会用AI，不如你直接来看。</p>
+</div>
+<div class="home-text-right" id="homeTextRight">
+<p class="desc" id="homeDesc">从城市森林到谈判桌前，寻姹紫嫣红，赏满天星斗，我一直在尝试把好奇心变成可落地的事。我相信最好的销售是能把技术翻译成客户听得懂的话，而AI正在让这件事变得更有趣。这个网站就是用 Claude Code 搭的——与其说我会用AI，不如你直接来看。</p>
+<div class="flip-trigger" id="flipTrigger" onclick="toggleFlip()">
+<div class="page-curl"></div>
+<span class="flip-label" id="flipLabel">点击翻页</span>
+</div>
 </div>
 </div>
 
@@ -287,7 +319,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(254,254,254,
 
 <!-- ============ PAGE 2: RESUME ============ -->
 <div class="page" id="page-resume">
-<div class="page-hero"><h2>个人简介</h2></div>
 <section class="content-section">
 <h3 class="section-title">基本信息</h3>
 <div class="info-grid">
@@ -346,7 +377,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(254,254,254,
 
 <!-- ============ PAGE 3: STARTUP ============ -->
 <div class="page" id="page-startup">
-<div class="page-hero"><h2>成果展示</h2></div>
 <div class="divider"><div class="divider-line"></div></div>
 <section class="showcase-project">
 <div class="project-header">
@@ -451,6 +481,27 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(254,254,254,
 
 <!-- ====== SCRIPTS ====== -->
 <script>
+// ---- Flip card ----
+let isFlipped = false;
+const descFront = '从城市森林到谈判桌前，寻姹紫嫣红，赏满天星斗，我一直在尝试把好奇心变成可落地的事。我相信最好的销售是能把技术翻译成客户听得懂的话，而AI正在让这件事变得更有趣。这个网站就是用 Claude Code 搭的——与其说我会用AI，不如你直接来看。';
+const descBack = '🧑 姓名：胡一平 &nbsp;&nbsp; 🎂 生日：1999年2月<br>📍 籍贯：浙江杭州 &nbsp;&nbsp; 🏠 家乡：辽宁营口';
+
+function toggleFlip() {
+  const inner = document.getElementById('flipCardInner');
+  const desc = document.getElementById('homeDesc');
+  const label = document.getElementById('flipLabel');
+  isFlipped = !isFlipped;
+  if (isFlipped) {
+    inner.classList.add('flipped');
+    setTimeout(() => { desc.innerHTML = descBack; }, 400);
+    label.textContent = '点击翻回';
+  } else {
+    inner.classList.remove('flipped');
+    setTimeout(() => { desc.innerHTML = descFront; }, 400);
+    label.textContent = '点击翻页';
+  }
+}
+
 // ---- Contact bar template ----
 const contactHTML = `
 <div class="contact-bar-inner">
