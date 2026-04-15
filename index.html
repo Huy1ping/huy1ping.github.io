@@ -47,16 +47,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(254,254,254,
 
 /* ===== PAGE 1: HOME ===== */
 .home-wrap{width:100%;height:calc(100vh - 70px);position:relative;overflow:hidden}
-.home-avatar-area{position:absolute;bottom:0;left:50%;transform:translateX(-50%);z-index:2;perspective:1200px}
-.home-avatar-area img{height:80vh;width:auto;filter:drop-shadow(0 12px 40px rgba(0,0,0,.07))}
+.home-avatar-area{position:absolute;bottom:0;left:50%;transform:translateX(-50%);z-index:2}
 
-/* Flip card */
-.flip-card{height:80vh;position:relative}
-.flip-card-inner{position:relative;width:100%;height:100%;transition:transform 0.8s cubic-bezier(.4,.2,.2,1);transform-style:preserve-3d}
-.flip-card-inner.flipped{transform:rotateY(180deg)}
-.flip-card-front,.flip-card-back{position:absolute;top:0;left:0;width:100%;height:100%;backface-visibility:hidden;display:flex;align-items:flex-end;justify-content:center}
-.flip-card-back{transform:rotateY(180deg)}
-.flip-card-front img,.flip-card-back img{height:100%;width:auto;filter:drop-shadow(0 12px 40px rgba(0,0,0,.07))}
+/* Avatar images with black outline shadow */
+.avatar-container{position:relative;height:80vh}
+.avatar-img{position:absolute;top:0;left:50%;transform:translateX(-50%);height:100%;width:auto;filter:drop-shadow(0 0 3px rgba(0,0,0,.8)) drop-shadow(0 12px 30px rgba(0,0,0,.07));transition:opacity 0.6s ease}
+.avatar-img.hidden{opacity:0}
+
+/* Bulb button */
+.bulb-btn{position:absolute;z-index:5;width:70px;height:70px;cursor:pointer;transition:transform .3s}
+.bulb-btn:hover{transform:scale(1.1)}
+.bulb-btn img{width:100%;height:100%;object-fit:contain;transform:rotate(-30deg)}
 
 /* Home text - left corner */
 .home-text-left{position:absolute;bottom:28px;left:48px;z-index:3}
@@ -64,17 +65,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(254,254,254,
 .home-text-left .welcome .emoji{font-size:32px}
 
 /* Home text - right corner */
-.home-text-right{position:absolute;bottom:28px;right:48px;z-index:3;max-width:420px;text-align:right}
-.home-text-right .desc{font-size:14px;color:var(--text-secondary);line-height:1.9;margin-bottom:16px}
-
-/* Flip trigger - page curl */
-.flip-trigger{display:inline-flex;align-items:center;gap:10px;cursor:pointer;float:right}
-.page-curl{width:40px;height:40px;position:relative;overflow:hidden}
-.page-curl::before{content:'';position:absolute;bottom:0;right:0;width:0;height:0;border-style:solid;border-width:0 0 40px 40px;border-color:transparent transparent #ddd transparent;transition:border-color .3s}
-.page-curl::after{content:'';position:absolute;bottom:0;right:0;width:0;height:0;border-style:solid;border-width:0 0 30px 30px;border-color:transparent transparent #f5f5f5 transparent}
-.flip-trigger:hover .page-curl::before{border-color:transparent transparent var(--accent) transparent}
-.flip-label{font-size:13px;color:var(--text-dim);transition:color .3s;font-weight:500}
-.flip-trigger:hover .flip-label{color:var(--accent)}
+.home-text-right{position:absolute;bottom:28px;right:120px;z-index:3;max-width:440px;text-align:right}
+.home-text-right .desc{font-size:14px;color:var(--text-secondary);line-height:1.9}
+.home-text-right .desc-info{font-size:20px;color:var(--text-primary);line-height:2;font-weight:700}
 
 /* Keyword tracks */
 .kw-tracks{position:absolute;bottom:0;left:50%;width:0;height:0;z-index:1}
@@ -293,11 +286,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(254,254,254,
 <div class="home-wrap">
 <div class="kw-tracks" id="kwTracks"></div>
 <div class="home-avatar-area">
-<div class="flip-card" id="flipCard">
-<div class="flip-card-inner" id="flipCardInner">
-<div class="flip-card-front"><img src="avatar.png" alt="胡一平 卡通形象"></div>
-<div class="flip-card-back"><img src="photo-real.png" alt="胡一平 真人照片"></div>
+<div class="avatar-container" id="avatarContainer">
+<img class="avatar-img" id="avatarCartoon" src="avatar.png" alt="胡一平 卡通形象">
+<img class="avatar-img hidden" id="avatarReal" src="photo-real.png" alt="胡一平 真人照片">
 </div>
+<div class="bulb-btn" id="bulbBtn">
+<img id="bulbImg" src="bulb-off.png" alt="灯泡">
 </div>
 </div>
 <div class="home-text-left">
@@ -305,10 +299,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(254,254,254,
 </div>
 <div class="home-text-right" id="homeTextRight">
 <p class="desc" id="homeDesc">从城市森林到谈判桌前，寻姹紫嫣红，赏满天星斗，我一直在尝试把好奇心变成可落地的事。我相信最好的销售是能把技术翻译成客户听得懂的话，而AI正在让这件事变得更有趣。这个网站就是用 Claude Code 搭的——与其说我会用AI，不如你直接来看。</p>
-<div class="flip-trigger" id="flipTrigger" onclick="toggleFlip()">
-<div class="page-curl"></div>
-<span class="flip-label" id="flipLabel">点击翻页</span>
-</div>
 </div>
 </div>
 
@@ -481,26 +471,40 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(254,254,254,
 
 <!-- ====== SCRIPTS ====== -->
 <script>
-// ---- Flip card ----
-let isFlipped = false;
+// ---- Bulb hover interaction ----
 const descFront = '从城市森林到谈判桌前，寻姹紫嫣红，赏满天星斗，我一直在尝试把好奇心变成可落地的事。我相信最好的销售是能把技术翻译成客户听得懂的话，而AI正在让这件事变得更有趣。这个网站就是用 Claude Code 搭的——与其说我会用AI，不如你直接来看。';
-const descBack = '🧑 姓名：胡一平 &nbsp;&nbsp; 🎂 生日：1999年2月<br>📍 籍贯：浙江杭州 &nbsp;&nbsp; 🏠 家乡：辽宁营口';
+const descBack = '<span class="desc-info">🧑 姓名：胡一平 &nbsp;&nbsp; 🎂 生日：1999年2月<br>📍 籍贯：浙江杭州 &nbsp;&nbsp; 🏠 家乡：辽宁营口</span>';
 
-function toggleFlip() {
-  const inner = document.getElementById('flipCardInner');
-  const desc = document.getElementById('homeDesc');
-  const label = document.getElementById('flipLabel');
-  isFlipped = !isFlipped;
-  if (isFlipped) {
-    inner.classList.add('flipped');
-    setTimeout(() => { desc.innerHTML = descBack; }, 400);
-    label.textContent = '点击翻回';
-  } else {
-    inner.classList.remove('flipped');
-    setTimeout(() => { desc.innerHTML = descFront; }, 400);
-    label.textContent = '点击翻页';
-  }
+const bulbBtn = document.getElementById('bulbBtn');
+const bulbImg = document.getElementById('bulbImg');
+const cartoonImg = document.getElementById('avatarCartoon');
+const realImg = document.getElementById('avatarReal');
+const homeDesc = document.getElementById('homeDesc');
+
+// Position bulb at top-right of avatar head
+function positionBulb() {
+  const container = document.getElementById('avatarContainer');
+  if (!container) return;
+  const h = container.offsetHeight;
+  bulbBtn.style.top = (h * 0.02) + 'px';
+  bulbBtn.style.right = (-20) + 'px';
 }
+positionBulb();
+window.addEventListener('resize', positionBulb);
+
+bulbBtn.addEventListener('mouseenter', () => {
+  bulbImg.src = 'bulb-on.png';
+  cartoonImg.classList.add('hidden');
+  realImg.classList.remove('hidden');
+  homeDesc.innerHTML = descBack;
+});
+
+bulbBtn.addEventListener('mouseleave', () => {
+  bulbImg.src = 'bulb-off.png';
+  cartoonImg.classList.remove('hidden');
+  realImg.classList.add('hidden');
+  homeDesc.innerHTML = descFront;
+});
 
 // ---- Contact bar template ----
 const contactHTML = `
