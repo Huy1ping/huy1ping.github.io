@@ -235,9 +235,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(254,254,254,
 .interest-card .interest-desc{font-size:11px;color:var(--text-secondary);line-height:1.7}
 
 .photo-gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.photo-item{aspect-ratio:1;background:var(--bg-soft);border:1px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--text-dim);font-size:11px;transition:all .4s;overflow:hidden}
+.photo-item{aspect-ratio:1;background:var(--bg-soft);border:1px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--text-dim);font-size:11px;transition:all .4s;overflow:hidden;cursor:pointer}
 .photo-item:hover{border-color:var(--accent);transform:scale(1.04);z-index:2}
-.photo-item:nth-child(1){grid-column:span 2;grid-row:span 2}
+.photo-item:nth-child(1){grid-column:span 2;grid-row:span 2;cursor:default}
+.photo-item:nth-child(1):hover{transform:none}
+.photo-item:nth-child(1) img{object-fit:contain!important}
+.photo-item.ring-active{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
 
 /* ===== CONTACT BAR (in-flow) ===== */
 .contact-bar{width:100%;background:var(--bg-soft);border-top:1px solid var(--border);padding:28px 48px;margin-top:20px;position:relative;z-index:10}
@@ -625,8 +628,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(254,254,254,
 <section class="thought-block" id="block-photography">
 <div class="thought-block-title">📸 摄影与设计</div>
 <div class="thought-block-subtitle">用镜头和创意记录世界的方式</div>
-<div class="photo-gallery">
-<div class="photo-item"><img src="photography-1.jpeg" alt="" style="width:100%;height:100%;object-fit:cover"></div><div class="photo-item"><img src="photography-2.jpeg" alt="" style="width:100%;height:100%;object-fit:cover"></div><div class="photo-item"><img src="photography-3.jpg" alt="" style="width:100%;height:100%;object-fit:cover"></div><div class="photo-item"><img src="photography-4.jpg" alt="" style="width:100%;height:100%;object-fit:cover"></div><div class="photo-item"><img src="photography-5.jpg" alt="" style="width:100%;height:100%;object-fit:cover"></div><div class="photo-item"><img src="photography-6.jpg" alt="" style="width:100%;height:100%;object-fit:cover"></div><div class="photo-item"><img src="photography-7.jpg" alt="" style="width:100%;height:100%;object-fit:cover"></div>
+<div class="photo-gallery" id="photoGallery">
+<div class="photo-item" id="galleryPreview"><img src="photography-1.jpeg" alt="" style="width:100%;height:100%;object-fit:contain"></div><div class="photo-item ring-active" data-src="photography-1.jpeg"><img src="photography-1.jpeg" alt="" style="width:100%;height:100%;object-fit:cover"></div><div class="photo-item" data-src="photography-2.jpeg"><img src="photography-2.jpeg" alt="" style="width:100%;height:100%;object-fit:cover"></div><div class="photo-item" data-src="photography-3.jpg"><img src="photography-3.jpg" alt="" style="width:100%;height:100%;object-fit:cover"></div><div class="photo-item" data-src="photography-4.jpg"><img src="photography-4.jpg" alt="" style="width:100%;height:100%;object-fit:cover"></div><div class="photo-item" data-src="photography-5.jpg"><img src="photography-5.jpg" alt="" style="width:100%;height:100%;object-fit:cover"></div><div class="photo-item" data-src="photography-6.jpg"><img src="photography-6.jpg" alt="" style="width:100%;height:100%;object-fit:cover"></div><div class="photo-item" data-src="photography-7.jpg"><img src="photography-7.jpg" alt="" style="width:100%;height:100%;object-fit:cover"></div>
 </div>
 </section>
 
@@ -961,6 +964,21 @@ document.querySelectorAll('[data-stream]').forEach(stream => {
   nextBtn.addEventListener('click', () => goTo(offset + 1));
   goTo(0);
 });
+
+// ---- Photography gallery: click thumbnail -> preview ----
+const galleryPreview = document.getElementById('galleryPreview');
+if (galleryPreview) {
+  const gallery = document.getElementById('photoGallery');
+  const thumbs = gallery.querySelectorAll('.photo-item[data-src]');
+  thumbs.forEach(thumb => {
+    thumb.addEventListener('click', () => {
+      const src = thumb.getAttribute('data-src');
+      galleryPreview.querySelector('img').src = src;
+      thumbs.forEach(t => t.classList.remove('ring-active'));
+      thumb.classList.add('ring-active');
+    });
+  });
+}
 </script>
 </body>
 </html>
