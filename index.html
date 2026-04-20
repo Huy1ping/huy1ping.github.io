@@ -70,7 +70,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(254,254,254,
 /* Home text - right corner */
 .home-text-right{position:absolute;bottom:28px;right:120px;z-index:3;max-width:440px;text-align:left}
 .home-text-right .desc{font-size:14px;color:var(--text-secondary);line-height:1.9}
-.home-text-right .desc-info{font-size:20px;color:var(--text-primary);line-height:2.2;display:grid;grid-template-columns:auto auto;gap:4px 40px}
+.home-text-right .desc-info{font-size:20px;color:var(--text-secondary);line-height:2.2;display:grid;grid-template-columns:auto auto;gap:4px 40px}
 
 /* Keyword tracks */
 .kw-tracks{position:absolute;bottom:0;left:50%;width:0;height:0;z-index:1}
@@ -143,24 +143,52 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(254,254,254,
 .tl-placeholder{min-height:50px}
 
 /* ===== PAGE 3: STARTUP ===== */
-.showcase-project{width:100%;max-width:1400px;margin:0 auto;padding:36px 48px 50px}
-.project-header{display:flex;align-items:center;gap:14px;margin-bottom:8px}
-.project-header .proj-logo{width:40px;height:40px;border-radius:10px;object-fit:contain;background:var(--bg-soft);padding:4px}
-.project-header h3{font-size:22px;font-weight:700}
-.project-badge{padding:4px 12px;border:1px solid var(--border-hover);border-radius:100px;font-size:11px;color:var(--accent);font-family:var(--font-mono)}
-.project-desc{color:var(--text-secondary);font-size:13px;line-height:1.8;max-width:700px;margin-bottom:6px}
-.project-role{font-size:12px;color:var(--accent);margin-bottom:20px}
-.project-stats{display:flex;gap:14px;margin-bottom:24px;flex-wrap:wrap}
-.stat-item{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:14px 20px;min-width:130px;box-shadow:var(--shadow);transition:all .3s}
+/* Showcase scroll-snap container */
+.showcase-scroll{height:calc(100vh - 70px);overflow-y:auto;scroll-snap-type:y mandatory;scroll-behavior:smooth}
+.showcase-snap{height:calc(100vh - 70px);scroll-snap-align:start;scroll-snap-stop:always;display:flex;align-items:center;overflow:hidden}
+.showcase-snap.snap-footer{height:auto;min-height:160px;align-items:stretch;flex-direction:column}
+.showcase-project{width:100%;margin:0 auto;padding:6px 228px}
+.project-header{display:flex;align-items:center;gap:16px;margin-bottom:8px;flex-wrap:wrap}
+.project-header .proj-logo{width:48px;height:48px;border-radius:10px;object-fit:contain;background:var(--bg-soft);padding:4px}
+.project-header h3{font-size:28px;font-weight:700}
+.project-badge{padding:5px 14px;border:1px solid var(--border-hover);border-radius:100px;font-size:14px;color:var(--accent);font-family:var(--font-mono)}
+.project-header .xhs-btn{margin-left:8px}
+.project-desc{color:var(--text-secondary);font-size:17px;line-height:1.8;margin-bottom:8px}
+.project-role{font-size:16px;color:var(--accent);margin-bottom:16px}
+.project-stats{display:flex;gap:18px;margin-bottom:16px;flex-wrap:wrap}
+.stat-item{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:20px 28px;min-width:160px;box-shadow:var(--shadow);transition:all .3s}
 .stat-item:hover{border-color:var(--border-hover);transform:translateY(-2px);box-shadow:var(--shadow-hover)}
-.stat-item .stat-number{font-size:24px;color:var(--accent);font-weight:700}
-.stat-item .stat-label{font-size:10px;color:var(--text-dim);margin-top:2px}
-.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
-.gallery-item{aspect-ratio:4/3;background:var(--bg-soft);border:1px solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--text-dim);font-size:12px;transition:all .3s;overflow:hidden}
-.gallery-item:hover{border-color:var(--border-hover);transform:scale(1.02)}
-.xhs-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:var(--xhs-red);color:#fff;border:none;border-radius:100px;font-family:var(--font-body);font-size:13px;font-weight:600;cursor:pointer;transition:all .3s;text-decoration:none}
+.stat-item .stat-number{font-size:32px;color:var(--accent);font-weight:700}
+.stat-item .stat-label{font-size:14px;color:var(--text-dim);margin-top:4px}
+
+/* Photo stream */
+.photo-stream{position:relative;margin-bottom:6px}
+.photo-stream-viewport{overflow:hidden;border-radius:14px;padding:1px}
+.photo-stream-track{display:flex;gap:1.5%;transition:transform .4s ease}
+.photo-stream-item{flex:0 0 32.333%;min-width:32.333%;background:var(--bg-soft);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.photo-stream-item:hover{border-color:var(--border-hover)}
+.photo-stream-item .photo-img{aspect-ratio:4/3;background:var(--bg-soft);display:flex;align-items:center;justify-content:center;color:var(--text-dim);font-size:14px;overflow:hidden}
+.photo-stream-item .photo-img img{width:100%;height:100%;object-fit:cover}
+.photo-stream-item .photo-caption{padding:8px 12px;font-size:14px;color:var(--text-primary);text-align:center;font-weight:500}
+.photo-stream-controls{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:6px}
+.stream-arrow{width:34px;height:34px;border-radius:50%;background:var(--accent);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s;box-shadow:0 2px 8px rgba(224,122,58,.3)}
+.stream-arrow:hover{background:#c96a2e;transform:scale(1.08)}
+.stream-arrow:disabled{background:var(--text-dim);cursor:not-allowed;box-shadow:none}
+.stream-arrow svg{width:16px;height:16px}
+.stream-dots{display:flex;gap:7px}
+.stream-dot{width:8px;height:8px;border-radius:50%;background:var(--accent-light);border:1px solid var(--border-hover);cursor:pointer;transition:all .3s;padding:0}
+.stream-dot.active{background:var(--accent);transform:scale(1.3)}
+
+.xhs-btn{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;background:var(--xhs-red);color:#fff;border:none;border-radius:100px;font-family:var(--font-body);font-size:12px;font-weight:600;cursor:pointer;transition:all .3s;text-decoration:none}
 .xhs-btn:hover{background:#e6102d;transform:translateY(-1px);box-shadow:0 4px 12px rgba(255,36,66,.25)}
-.xhs-btn svg{width:18px;height:18px}
+.xhs-btn svg{width:16px;height:16px}
+
+/* Side nav for showcase */
+.side-nav{position:fixed;left:24px;top:50%;transform:translateY(-50%);z-index:50;background:#fff;border:2px solid #1a1a1a;border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:8px;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.side-nav-btn{display:flex;align-items:center;gap:10px;padding:10px 16px;border:none;background:none;cursor:pointer;border-radius:10px;transition:all .3s;color:#1a1a1a;font-family:var(--font-body);font-size:13px;font-weight:600;white-space:nowrap;text-align:left}
+.side-nav-btn img{width:24px;height:24px;border-radius:50%;object-fit:contain;background:var(--bg-soft);flex-shrink:0}
+.side-nav-btn:hover{background:#f0f0f0}
+.side-nav-btn.active{background:#1a1a1a;color:#fff}
 
 /* ===== PAGE 4: ABOUT ===== */
 .about-intro-screen{width:100%;height:calc(100vh - 70px);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
@@ -389,38 +417,159 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(254,254,254,
 
 <!-- ============ PAGE 3: STARTUP ============ -->
 <div class="page" id="page-startup">
+<div class="showcase-scroll" id="showcaseScroll">
+
+<!-- Side navigation -->
+<div class="side-nav" id="sideNav">
+<button class="side-nav-btn active" data-target="proj-stellren"><img src="stellren-logo.jpeg" alt="星见"><span>星见 StelRen</span></button>
+<button class="side-nav-btn" data-target="proj-vastdata"><img src="vastdata-logo.png" alt="海量"><span>海量数据</span></button>
+<button class="side-nav-btn" data-target="proj-ac"><img src="ac-logo.jpg" alt="AC"><span>AC露营社</span></button>
+<button class="side-nav-btn" data-target="proj-cscec"><img src="cscec-logo.png" alt="中建"><span>中建四局</span></button>
+<button class="side-nav-btn" data-target="proj-campus"><img src="university-logo.jpg" alt="矿大"><span>在校期间</span></button>
+</div>
+
 <div class="divider"><div class="divider-line"></div></div>
-<section class="showcase-project">
+
+<!-- Project 1: 星见 -->
+<div class="showcase-snap"><section class="showcase-project" id="proj-stellren">
 <div class="project-header">
 <img class="proj-logo" src="stellren-logo.jpeg" alt="星见">
 <h3>星见 StelRen</h3><span class="project-badge">2025.04 — 2026.03</span>
+<a class="xhs-btn" href="https://www.xiaohongshu.com/user/profile/65b61b43000000000d01d557?xsec_token=AB3hOIoLoJbHT4F9uBook_dKtPeO3Goc4WjKLLeAQWQyA%3D&xsec_source=pc_search" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-1v-1h-1v-3h1v-1h2v1h1v3h-1v1h-1zm3-7h-1v1h-3V9h1V8h3v1h1v3h-1v-1z"/></svg><span>小红书主页</span></a>
 </div>
 <p class="project-desc">清华背景观星文旅创业项目，致力于将天文科普与深度旅行结合，打造高品质暗夜体验与人文游学产品。</p>
 <p class="project-role">我的角色：商业化负责人 — 主导商业模型设计、产品体系搭建、定价策略、ToB资源拓展与活动落地执行</p>
 <div class="project-stats"><div class="stat-item"><div class="stat-number">15</div><div class="stat-label">线下活动场次</div></div><div class="stat-item"><div class="stat-number">11</div><div class="stat-label">线上讲座</div></div><div class="stat-item"><div class="stat-number">6</div><div class="stat-label">覆盖省市</div></div><div class="stat-item"><div class="stat-number">200–2000</div><div class="stat-label">产品客单价区间 (元)</div></div></div>
-<div class="gallery-grid"><div class="gallery-item">活动照片 1 · 待补充</div><div class="gallery-item">活动照片 2 · 待补充</div><div class="gallery-item">活动照片 3 · 待补充</div></div>
-<a class="xhs-btn" href="https://www.xiaohongshu.com/user/profile/65b61b43000000000d01d557?xsec_token=AB3hOIoLoJbHT4F9uBook_dKtPeO3Goc4WjKLLeAQWQyA%3D&xsec_source=pc_search" target="_blank">
-<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-1v-1h-1v-3h1v-1h2v1h1v3h-1v1h-1zm3-7h-1v1h-3V9h1V8h3v1h1v3h-1v-1z"/></svg>
-<span>小红书主页</span>
-</a>
-</section>
+<div class="photo-stream" data-stream>
+<div class="photo-stream-viewport"><div class="photo-stream-track">
+<div class="photo-stream-item"><div class="photo-img"><img src="stellren-1.jpg" alt="翁牛特旗沙漠观星"></div><div class="photo-caption">翁牛特旗沙漠观星</div></div>
+<div class="photo-stream-item"><div class="photo-img"><img src="stellren-2.jpg" alt="奥森观星科普活动"></div><div class="photo-caption">奥森观星科普活动</div></div>
+<div class="photo-stream-item"><div class="photo-img"><img src="stellren-3.jpg" alt="夏日湖合作观星基地"></div><div class="photo-caption">夏日湖合作观星基地</div></div>
+<div class="photo-stream-item"><div class="photo-img"><img src="stellren-4.jpg" alt="夏日湖观星活动"></div><div class="photo-caption">夏日湖观星活动</div></div>
+<div class="photo-stream-item"><div class="photo-img"><img src="stellren-5.jpeg" alt="公益星空科普活动"></div><div class="photo-caption">公益星空科普活动</div></div>
+<div class="photo-stream-item"><div class="photo-img"><img src="stellren-6.jpg" alt="母亲节特别活动"></div><div class="photo-caption">母亲节特别活动</div></div>
+</div></div>
+<div class="photo-stream-controls">
+<button class="stream-arrow stream-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="15 18 9 12 15 6"/></svg></button>
+<div class="stream-dots"></div>
+<button class="stream-arrow stream-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 18 15 12 9 6"/></svg></button>
+</div>
+</div>
+</section></div>
+
 <div class="divider"><div class="divider-line"></div></div>
-<section class="showcase-project">
+
+<!-- Project 2: 海量数据 -->
+<div class="showcase-snap"><section class="showcase-project" id="proj-vastdata">
+<div class="project-header">
+<img class="proj-logo" src="vastdata-logo.png" alt="海量">
+<h3>北京海量数据技术股份有限公司</h3><span class="project-badge">2024.06 — 2025.04</span>
+</div>
+<p class="project-desc">国内自主可控数据库厂商，专注于政企核心业务系统数据库产品与服务。我负责数字政府行业的客户开发与AI数据库产品推广。</p>
+<p class="project-role">我的角色：数字政府行业经理 — 负责工信/民政部委及全国省市厅局客户体系的客户开发、商机推进、ISV生态拓展</p>
+<div class="project-stats"><div class="stat-item"><div class="stat-number">20+</div><div class="stat-label">客户关系拓新</div></div><div class="stat-item"><div class="stat-number">10+</div><div class="stat-label">落地商机</div></div><div class="stat-item"><div class="stat-number">16</div><div class="stat-label">新拓合作ISV厂商</div></div><div class="stat-item"><div class="stat-number">10+</div><div class="stat-label">带来项目机会次数</div></div></div>
+<div class="photo-stream" data-stream>
+<div class="photo-stream-viewport"><div class="photo-stream-track">
+<div class="photo-stream-item"><div class="photo-img"><img src="vastdata-1.jpg" alt="参加行业会议"></div><div class="photo-caption">参加行业会议</div></div>
+<div class="photo-stream-item"><div class="photo-img">照片 2</div><div class="photo-caption">待补充</div></div>
+<div class="photo-stream-item"><div class="photo-img">照片 3</div><div class="photo-caption">待补充</div></div>
+</div></div>
+<div class="photo-stream-controls">
+<button class="stream-arrow stream-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="15 18 9 12 15 6"/></svg></button>
+<div class="stream-dots"></div>
+<button class="stream-arrow stream-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 18 15 12 9 6"/></svg></button>
+</div>
+</div>
+</section></div>
+
+<div class="divider"><div class="divider-line"></div></div>
+
+<!-- Project 3: AC -->
+<div class="showcase-snap"><section class="showcase-project" id="proj-ac">
 <div class="project-header">
 <img class="proj-logo" src="ac-logo.jpg" alt="AC">
 <h3>AC露营社</h3><span class="project-badge">2022.04 — 2024.06</span>
+<a class="xhs-btn" href="https://www.xiaohongshu.com/user/profile/61c2f9ad00000000100089da?xsec_token=ABzyV1gnHPtD4EEzVFQAqbOWQLUsvk9sM23X4DHa3f5-M%3D&xsec_source=pc_search" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-1v-1h-1v-3h1v-1h2v1h1v3h-1v1h-1zm3-7h-1v1h-3V9h1V8h3v1h1v3h-1v-1z"/></svg><span>小红书主页</span></a>
 </div>
 <p class="project-desc">一站式露营服务创业项目，为高校学生和年轻群体提供装备租赁、活动策划与露营体验服务。</p>
 <p class="project-role">我的角色：创业合伙人 — 负责品牌策划、线下活动执行、KOL渠道合作与ToB销售拓展</p>
 <div class="project-stats"><div class="stat-item"><div class="stat-number">8</div><div class="stat-label">校园活动场次</div></div><div class="stat-item"><div class="stat-number">300+</div><div class="stat-label">场均社群拉新</div></div><div class="stat-item"><div class="stat-number">1000+</div><div class="stat-label">KOL渠道获客</div></div><div class="stat-item"><div class="stat-number">CCTV</div><div class="stat-label">英文频道专题采访</div></div></div>
-<div class="gallery-grid"><div class="gallery-item">活动照片 1 · 待补充</div><div class="gallery-item">活动照片 2 · 待补充</div><div class="gallery-item">活动照片 3 · 待补充</div></div>
-<a class="xhs-btn" href="https://www.xiaohongshu.com/user/profile/61c2f9ad00000000100089da?xsec_token=ABzyV1gnHPtD4EEzVFQAqbOWQLUsvk9sM23X4DHa3f5-M%3D&xsec_source=pc_search" target="_blank">
-<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-1v-1h-1v-3h1v-1h2v1h1v3h-1v1h-1zm3-7h-1v1h-3V9h1V8h3v1h1v3h-1v-1z"/></svg>
-<span>小红书主页</span>
-</a>
-</section>
-<div class="contact-bar" id="contactBar3"></div>
+<div class="photo-stream" data-stream>
+<div class="photo-stream-viewport"><div class="photo-stream-track">
+<div class="photo-stream-item"><div class="photo-img"><img src="ac-1.jpg" alt="接受CGTN采访"></div><div class="photo-caption">接受CGTN采访</div></div>
+<div class="photo-stream-item"><div class="photo-img"><img src="ac-2.jpg" alt="参与时代少年团综艺录制"></div><div class="photo-caption">参与时代少年团综艺录制</div></div>
+<div class="photo-stream-item"><div class="photo-img"><img src="ac-3.jpeg" alt="承接高校实验室团建"></div><div class="photo-caption">承接高校实验室团建</div></div>
+<div class="photo-stream-item"><div class="photo-img"><img src="ac-4.jpg" alt="为AUGO音乐节供货"></div><div class="photo-caption">为AUGO音乐节供货</div></div>
+<div class="photo-stream-item"><div class="photo-img"><img src="ac-5.jpg" alt="承接互联网大厂团建"></div><div class="photo-caption">承接互联网大厂团建</div></div>
+<div class="photo-stream-item"><div class="photo-img"><img src="ac-6.jpg" alt="自提库房"></div><div class="photo-caption">自提库房</div></div>
+</div></div>
+<div class="photo-stream-controls">
+<button class="stream-arrow stream-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="15 18 9 12 15 6"/></svg></button>
+<div class="stream-dots"></div>
+<button class="stream-arrow stream-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 18 15 12 9 6"/></svg></button>
+</div>
+</div>
+</section></div>
+
+<div class="divider"><div class="divider-line"></div></div>
+
+<!-- Project 4: 中建 -->
+<div class="showcase-snap"><section class="showcase-project" id="proj-cscec">
+<div class="project-header">
+<img class="proj-logo" src="cscec-logo.png" alt="中建">
+<h3>中建四局北京公司总承包分公司</h3><span class="project-badge">2023.07 — 2024.06</span>
+</div>
+<p class="project-desc">央企建工巨头，作为党群活动专员 + 技术工程师双岗位实习锻炼，积累了大型组织运营与投标全流程经验。</p>
+<p class="project-role">我的角色：党群活动专员 & 技术工程师 — 负责企业文化活动策划执行、技术标书撰写、场地勘察与现场报价</p>
+<div class="project-stats"><div class="stat-item"><div class="stat-number">4</div><div class="stat-label">参与全流程投标</div></div><div class="stat-item"><div class="stat-number">2</div><div class="stat-label">成功中标</div></div><div class="stat-item"><div class="stat-number">No.1</div><div class="stat-label">转正考核排名</div></div><div class="stat-item"><div class="stat-number">京青年之星</div><div class="stat-label">2023年度荣誉</div></div></div>
+<div class="photo-stream" data-stream>
+<div class="photo-stream-viewport"><div class="photo-stream-track">
+<div class="photo-stream-item"><div class="photo-img"><img src="cscec-1.jpg" alt="组织校企篮球赛"></div><div class="photo-caption">组织校企篮球赛</div></div>
+<div class="photo-stream-item"><div class="photo-img"><img src="cscec-2.jpg" alt="当选团代表"></div><div class="photo-caption">当选团代表</div></div>
+<div class="photo-stream-item"><div class="photo-img"><img src="cscec-3.jpg" alt="当选"京青年"之星"></div><div class="photo-caption">当选"京青年"之星</div></div>
+<div class="photo-stream-item"><div class="photo-img"><img src="cscec-4.jpg" alt="冬至包饺子活动"></div><div class="photo-caption">冬至包饺子活动</div></div>
+<div class="photo-stream-item"><div class="photo-img"><img src="cscec-5.jpg" alt="组织趣味运动会"></div><div class="photo-caption">组织趣味运动会</div></div>
+<div class="photo-stream-item"><div class="photo-img"><img src="cscec-6.jpg" alt="多次参与投标"></div><div class="photo-caption">多次参与投标</div></div>
+</div></div>
+<div class="photo-stream-controls">
+<button class="stream-arrow stream-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="15 18 9 12 15 6"/></svg></button>
+<div class="stream-dots"></div>
+<button class="stream-arrow stream-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 18 15 12 9 6"/></svg></button>
+</div>
+</div>
+</section></div>
+
+<div class="divider"><div class="divider-line"></div></div>
+
+<!-- Project 5: 在校期间 -->
+<div class="showcase-snap"><section class="showcase-project" id="proj-campus">
+<div class="project-header">
+<img class="proj-logo" src="university-logo.jpg" alt="矿大">
+<h3>在校期间</h3><span class="project-badge">2017.09 — 2023.06</span>
+</div>
+<p class="project-desc">六年双学位本科就读于中国矿业大学（北京），担任校学生会主席，主导多项大型校园活动并斩获多项创业与营销奖项。</p>
+<p class="project-role">我的角色：校学生会主席 / 挑战杯参赛者 / 营销大赛选手 — 统筹校园大型活动策划与执行，参与创业与营销赛事</p>
+<div class="project-stats"><div class="stat-item"><div class="stat-number">银奖</div><div class="stat-label">挑战杯首都大学生创业竞赛</div></div><div class="stat-item"><div class="stat-number">冠军</div><div class="stat-label">校营销大赛</div></div><div class="stat-item"><div class="stat-number">110</div><div class="stat-label">承办校庆周年数</div></div><div class="stat-item"><div class="stat-number">8+</div><div class="stat-label">承办大型活动场次</div></div></div>
+<div class="photo-stream" data-stream>
+<div class="photo-stream-viewport"><div class="photo-stream-track">
+<div class="photo-stream-item"><div class="photo-img"><img src="campus-1.jpg" alt="校歌手大赛"></div><div class="photo-caption">校歌手大赛</div></div>
+<div class="photo-stream-item"><div class="photo-img"><img src="campus-2.jpg" alt="音乐厂牌路演"></div><div class="photo-caption">音乐厂牌路演</div></div>
+<div class="photo-stream-item"><div class="photo-img"><img src="campus-3.jpg" alt="建校110周年献唱校歌"></div><div class="photo-caption">建校110周年献唱校歌</div></div>
+<div class="photo-stream-item"><div class="photo-img"><img src="campus-4.jpg" alt="筹拍毕业微电影"></div><div class="photo-caption">筹拍毕业微电影</div></div>
+<div class="photo-stream-item"><div class="photo-img"><img src="campus-5.jpg" alt="校迎新晚会"></div><div class="photo-caption">校迎新晚会</div></div>
+<div class="photo-stream-item"><div class="photo-img"><img src="campus-6.jpg" alt="做各校宣传路演"></div><div class="photo-caption">做各校宣传路演</div></div>
+</div></div>
+<div class="photo-stream-controls">
+<button class="stream-arrow stream-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="15 18 9 12 15 6"/></svg></button>
+<div class="stream-dots"></div>
+<button class="stream-arrow stream-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 18 15 12 9 6"/></svg></button>
+</div>
+</div>
+</section></div>
+
+<div class="showcase-snap snap-footer"><div class="contact-bar" id="contactBar3"></div>
 <footer class="page-footer"><div class="footer-left">© 2026 胡一平 Evan<div class="claude-badge">⚡ Built with Claude Code</div></div><div class="footer-right">MaaS Sales · Open to Opportunities</div></footer>
+</div></div>
 </div>
 
 <!-- ============ PAGE 4: ABOUT ============ -->
@@ -441,6 +590,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(254,254,254,
 <!-- Scrollable content -->
 <div id="aboutContent" style="position:relative">
 <div class="divider"><div class="divider-line"></div></div>
+<section class="thought-block" id="block-self">
+<div class="thought-block-title">💬 我眼中的自己</div>
+<div class="thought-block-subtitle">标签之外，我是这样的人</div>
+<p style="font-size:13px;color:var(--text-secondary);line-height:2.2;margin-bottom:0">我不是一个安于现状的人。从工程力学到销售，从露营创业到观星文旅，每一次转身都不是因为"做不下去"，而是因为我想看到更多可能性。我相信人生不需要一条笔直的路，重要的是每一步都在认真走。我喜欢跟人打交道，喜欢把复杂的东西讲清楚，喜欢在不确定中找到方向——这大概就是我选择做销售的原因。如果要用一句话概括我的信条，大概是：保持好奇，持续行动，把每一件小事做出意义感。</p>
+</section>
+
+<div class="divider"><div class="divider-line"></div></div>
 <section class="thought-block" id="block-ai">
 <div class="thought-block-title">⚡ 我与 AI</div>
 <div class="thought-block-subtitle">工具改变工作方式，认知决定使用深度</div>
@@ -451,18 +607,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(254,254,254,
 <div class="ai-tool-card"><div class="tool-name">场景三：内容创作</div><div class="tool-desc">待补充</div></div>
 </div>
 <div class="ai-note"><strong>关于这个网站：</strong>你正在浏览的这个个人网站，从设计到代码，全程由 Claude Code 独立构建。这本身就是我 AI 实践能力的一个证明 — 我相信未来的销售不只是懂产品，更要懂得用 AI 重塑自己的工作方式。</div>
-</section>
-
-<div class="divider"><div class="divider-line"></div></div>
-<section class="thought-block" id="block-growth">
-<div class="thought-block-title">🌱 我的成长轨迹</div>
-<div class="thought-block-subtitle">每一次转变背后的思考</div>
-<div class="growth-tl">
-<div class="growth-item"><div class="gp">2017 — 2021</div><div class="gt">工程力学 · 理工科的底层训练</div><div class="gd">待补充</div></div>
-<div class="growth-item"><div class="gp">2021 — 2023</div><div class="gt">第二学位 & 创业启蒙</div><div class="gd">待补充</div></div>
-<div class="growth-item"><div class="gp">2023 — 2024</div><div class="gt">从工程师到销售的转身</div><div class="gd">待补充</div></div>
-<div class="growth-item"><div class="gp">2024 — 至今</div><div class="gt">AI 时代的销售</div><div class="gd">待补充</div></div>
-</div>
 </section>
 
 <div class="divider"><div class="divider-line"></div></div>
@@ -479,13 +623,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(254,254,254,
 
 <div class="divider"><div class="divider-line"></div></div>
 <section class="thought-block" id="block-photography">
-<div class="thought-block-title">🖼 摄影作品</div>
-<div class="thought-block-subtitle">用镜头记录世界的方式</div>
+<div class="thought-block-title">📸 摄影与设计</div>
+<div class="thought-block-subtitle">用镜头和创意记录世界的方式</div>
 <div class="photo-gallery">
-<div class="photo-item">作品 1 · 待补充</div><div class="photo-item">作品 2</div><div class="photo-item">作品 3</div><div class="photo-item">作品 4</div><div class="photo-item">作品 5</div><div class="photo-item">作品 6</div><div class="photo-item">作品 7</div>
+<div class="photo-item"><img src="photography-1.jpeg" alt="" style="width:100%;height:100%;object-fit:cover"></div><div class="photo-item"><img src="photography-2.jpeg" alt="" style="width:100%;height:100%;object-fit:cover"></div><div class="photo-item"><img src="photography-3.jpg" alt="" style="width:100%;height:100%;object-fit:cover"></div><div class="photo-item"><img src="photography-4.jpg" alt="" style="width:100%;height:100%;object-fit:cover"></div><div class="photo-item"><img src="photography-5.jpg" alt="" style="width:100%;height:100%;object-fit:cover"></div><div class="photo-item"><img src="photography-6.jpg" alt="" style="width:100%;height:100%;object-fit:cover"></div><div class="photo-item"><img src="photography-7.jpg" alt="" style="width:100%;height:100%;object-fit:cover"></div>
 </div>
 </section>
-</div>
 
 <div class="contact-bar" id="contactBar4"></div>
 <footer class="page-footer"><div class="footer-left">© 2026 胡一平 Evan<div class="claude-badge">⚡ Built with Claude Code</div></div><div class="footer-right">MaaS Sales · Open to Opportunities</div></footer>
@@ -735,6 +878,89 @@ window.addEventListener('wheel', (e) => {
     updateSpiral();
   }
 }, { passive: false });
+
+// ---- Side nav for startup page ----
+(function() {
+  const sideNav = document.getElementById('sideNav');
+  if (!sideNav) return;
+  const sideBtns = sideNav.querySelectorAll('.side-nav-btn');
+
+  // Show/hide side nav based on current page
+  function updateSideNavVisibility() {
+    const startupActive = document.getElementById('page-startup').classList.contains('active');
+    sideNav.style.display = startupActive ? 'flex' : 'none';
+  }
+  updateSideNavVisibility();
+
+  // Hook into tab buttons to refresh visibility
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.addEventListener('click', () => setTimeout(updateSideNavVisibility, 50));
+  });
+
+  // Click to scroll within the showcase-scroll container
+  const scrollContainer = document.getElementById('showcaseScroll');
+  sideBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = document.getElementById(btn.dataset.target);
+      if (target && scrollContainer) {
+        target.closest('.showcase-snap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Active state based on scroll position within container
+  const projects = ['proj-stellren', 'proj-vastdata', 'proj-ac', 'proj-cscec', 'proj-campus'];
+  if (scrollContainer) {
+    scrollContainer.addEventListener('scroll', () => {
+      if (sideNav.style.display === 'none') return;
+      let activeIdx = 0;
+      for (let i = 0; i < projects.length; i++) {
+        const el = document.getElementById(projects[i]);
+        if (!el) continue;
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.5) activeIdx = i;
+      }
+      sideBtns.forEach((b, i) => b.classList.toggle('active', i === activeIdx));
+    });
+  }
+})();
+
+// ---- Photo stream (3 visible, slide by 1) ----
+document.querySelectorAll('[data-stream]').forEach(stream => {
+  const track = stream.querySelector('.photo-stream-track');
+  const items = stream.querySelectorAll('.photo-stream-item');
+  const prevBtn = stream.querySelector('.stream-prev');
+  const nextBtn = stream.querySelector('.stream-next');
+  const dotsBox = stream.querySelector('.stream-dots');
+  const total = items.length;
+  const visible = 3;
+  const maxOffset = total - visible;
+  let offset = 0;
+
+  // Build dots
+  for (let i = 0; i <= maxOffset; i++) {
+    const dot = document.createElement('button');
+    dot.className = 'stream-dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', () => goTo(i));
+    dotsBox.appendChild(dot);
+  }
+  const dots = dotsBox.querySelectorAll('.stream-dot');
+
+  function goTo(idx) {
+    offset = Math.max(0, Math.min(maxOffset, idx));
+    const stepPct = 32.333 + 1.5; // item width% + gap%
+    const pct = offset * stepPct;
+    track.style.transform = `translateX(-${pct}%)`;
+    track.style.transition = 'transform .4s ease';
+    dots.forEach((d, i) => d.classList.toggle('active', i === offset));
+    prevBtn.disabled = offset === 0;
+    nextBtn.disabled = offset === maxOffset;
+  }
+
+  prevBtn.addEventListener('click', () => goTo(offset - 1));
+  nextBtn.addEventListener('click', () => goTo(offset + 1));
+  goTo(0);
+});
 </script>
 </body>
 </html>
