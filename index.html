@@ -988,6 +988,10 @@ if (galleryPreview) {
 
 // ---- Prioritized image loading: homepage first, then page by page ----
 (function(){
+  // Preload bulb-on image so hover flip is instant
+  const bulbPreload = new Image();
+  bulbPreload.src = 'bulb-on.png';
+
   // Wait for homepage images to finish loading
   const priorityImgs = document.querySelectorAll('#page-home img[src]:not([src=""])');
   let loaded = 0;
@@ -1007,7 +1011,7 @@ if (galleryPreview) {
   if(priorityImgs.length === 0) loadByPage();
   
   function loadByPage(){
-    const pageOrder = ['page-profile','page-showcase','page-about'];
+    const pageOrder = ['page-resume','page-startup','page-about'];
     let delay = 0;
     pageOrder.forEach(pageId => {
       setTimeout(() => {
