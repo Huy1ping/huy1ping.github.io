@@ -401,7 +401,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(254,254,254,
 <div class="tl-card"><div class="card-top"><img class="card-logo" src="" data-lazy="ac-logo.jpg" alt="AC"><div class="card-info"><div class="card-time">2022.04 — 2024.06</div><div class="card-company">AC露营社</div><div class="card-role">创业合伙人</div></div></div><div class="card-motto">「创业启蒙：从零搭建品牌，商业化初体验」</div><div class="card-line"></div><ul class="card-highlights"><li>独立提出「露营第一站，AC做伙伴」品牌slogan</li><li>策划线下活动8场，落地清北等8所高校，场均拉新300+人</li><li>联名营销9场，KOL渠道获客1000+</li><li>ToB商单开拓与承接20+</li><li>接受CCTV英文频道露营行业专题采访</li></ul></div></div>
 
 <div class="tl-row">
-<div class="tl-card"><div class="card-top"><img class="card-logo" src="" data-lazy="cscec-logo.png" alt="中建"><div class="card-info"><div class="card-time">2023.07 — 2024.06</div><div class="card-company">中建四局北京公司总承包分公司</div><div class="card-role">党群活动专员 & 技术工程师</div></div></div><div class="card-motto">「职业刷新：央企光环祛魅，职业规划梳理」</div><div class="card-line"></div><ul class="card-highlights"><li>将二十四节气与国际节日纳入企划日历并落地执行</li><li>参与全流程投标4次，成功中标2次</li><li>转正考核排名第一 · 2023年度京青年之星</li></ul></div>
+<div class="tl-card"><div class="card-top"><img class="card-logo" src="" data-lazy="cscec-logo.png" alt="中建"><div class="card-info"><div class="card-time">2023.07 — 2024.06</div><div class="card-company">中建四局北京公司总承包分公司</div><div class="card-role">党群活动专员 & 技术工程师</div></div></div><div class="card-motto">「观念刷新：央企光环祛魅，职业规划梳理」</div><div class="card-line"></div><ul class="card-highlights"><li>将二十四节气与国际节日纳入企划日历并落地执行</li><li>参与全流程投标4次，成功中标2次</li><li>转正考核排名第一 · 2023年度京青年之星</li></ul></div>
 <div class="tl-placeholder"></div></div>
 
 <div class="tl-row">
@@ -653,15 +653,35 @@ const bulbImg = document.getElementById('bulbImg');
 const flipInner = document.getElementById('flipCardInner');
 const homeDesc = document.getElementById('homeDesc');
 
-// Position bulb: below the "/" between 成果展示 and 关于我, +70px down
+// Position bulb: anchored relative to avatar character
+// a = horizontal distance from bulb center to avatar centerline (as ratio of avatar height)
+// b = vertical distance from bulb center to avatar bottom (as ratio of avatar height, measured upward)
+// c = bulb rotation angle in degrees (clockwise from vertical)
+const BULB_A = 0.11;   // ~10% of avatar height to the right of centerline
+const BULB_B = 0.92;   // ~92% up from avatar bottom (near top of head)
+const BULB_C = 45;     // 45 degree clockwise tilt
+
 function positionBulb() {
-  const seps = document.querySelectorAll('.nav-sep');
-  if (seps.length >= 3) {
-    const sep = seps[2]; // the "/" between 成果展示 and 关于我
-    const rect = sep.getBoundingClientRect();
-    bulbWrap.style.left = (rect.left + rect.width/2 - 70) + 'px';
-    bulbWrap.style.top = (rect.bottom + 50) + 'px';
-  }
+  const avatarArea = document.querySelector('.home-avatar-area');
+  if (!avatarArea) return;
+  const flipCard = avatarArea.querySelector('.flip-card');
+  if (!flipCard) return;
+  const avatarH = flipCard.offsetHeight; // actual rendered height of avatar
+  if (avatarH === 0) { setTimeout(positionBulb, 100); return; }
+  
+  // Avatar centerline = screen center (it's left:50% translateX(-50%))
+  const centerX = window.innerWidth / 2;
+  // Avatar bottom = viewport bottom minus any offset (bottom:0 in parent which has padding-top:70)
+  const parentRect = avatarArea.getBoundingClientRect();
+  const avatarBottom = parentRect.bottom;
+  
+  // Bulb center position
+  const bulbCenterX = centerX + (BULB_A * avatarH);
+  const bulbCenterY = avatarBottom - (BULB_B * avatarH);
+  
+  // Bulb element is 140px, position by top-left corner
+  bulbWrap.style.left = (bulbCenterX - 70) + 'px';
+  bulbWrap.style.top = (bulbCenterY - 70) + 'px';
 }
 
 // Only show bulb on home page
