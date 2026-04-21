@@ -653,31 +653,21 @@ const bulbImg = document.getElementById('bulbImg');
 const flipInner = document.getElementById('flipCardInner');
 const homeDesc = document.getElementById('homeDesc');
 
-// Position bulb: anchored relative to avatar character
-// a = horizontal distance from bulb center to avatar centerline (as ratio of avatar height)
-// b = vertical distance from bulb center to avatar bottom (as ratio of avatar height, measured upward)
-// c = bulb rotation angle in degrees (clockwise from vertical)
-const BULB_A = 0.07;   // ~7% of avatar height to the right of centerline
-const BULB_B = 1.03;   // ~103% up from avatar bottom (slightly above head top)
-const BULB_C = 45;     // 45 degree clockwise tilt
+// Position bulb: anchored relative to screen center and bottom
+// Avatar is centered on screen, bottom-aligned to viewport bottom
+// a = horizontal offset from screen centerline (as ratio of avatar height, positive = right)
+// b = distance up from viewport bottom (as ratio of avatar height)
+const BULB_A = 0.071;
+const BULB_B = 1.030;
 
 function positionBulb() {
-  const avatarArea = document.querySelector('.home-avatar-area');
-  if (!avatarArea) return;
-  const flipCard = avatarArea.querySelector('.flip-card');
-  if (!flipCard) return;
-  const avatarH = flipCard.offsetHeight; // actual rendered height of avatar
-  if (avatarH === 0) { setTimeout(positionBulb, 100); return; }
-  
-  // Avatar centerline = screen center (it's left:50% translateX(-50%))
-  const centerX = window.innerWidth / 2;
-  // Avatar bottom = viewport bottom minus any offset (bottom:0 in parent which has padding-top:70)
-  const parentRect = avatarArea.getBoundingClientRect();
-  const avatarBottom = parentRect.bottom;
+  const avatarH = window.innerHeight * 0.8; // 80vh = avatar height
+  const screenCenterX = window.innerWidth / 2;
+  const screenBottom = window.innerHeight;
   
   // Bulb center position
-  const bulbCenterX = centerX + (BULB_A * avatarH);
-  const bulbCenterY = avatarBottom - (BULB_B * avatarH);
+  const bulbCenterX = screenCenterX + (BULB_A * avatarH);
+  const bulbCenterY = screenBottom - (BULB_B * avatarH);
   
   // Bulb element is 140px, position by top-left corner
   bulbWrap.style.left = (bulbCenterX - 70) + 'px';
