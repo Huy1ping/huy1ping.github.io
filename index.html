@@ -653,25 +653,15 @@ const bulbImg = document.getElementById('bulbImg');
 const flipInner = document.getElementById('flipCardInner');
 const homeDesc = document.getElementById('homeDesc');
 
-// Position bulb: anchored relative to screen center and bottom
-// Avatar is centered on screen, bottom-aligned to viewport bottom
-// a = horizontal offset from screen centerline (as ratio of avatar height, positive = right)
-// b = distance up from viewport bottom (as ratio of avatar height)
-const BULB_A = 0.071;
-const BULB_B = 1.030;
-
+// Position bulb: below the "/" between 成果展示 and 关于我, +70px down
 function positionBulb() {
-  const avatarH = window.innerHeight * 0.8; // 80vh = avatar height
-  const screenCenterX = window.innerWidth / 2;
-  const screenBottom = window.innerHeight;
-  
-  // Bulb center position
-  const bulbCenterX = screenCenterX + (BULB_A * avatarH);
-  const bulbCenterY = screenBottom - (BULB_B * avatarH);
-  
-  // Bulb element is 140px, position by top-left corner
-  bulbWrap.style.left = (bulbCenterX - 70) + 'px';
-  bulbWrap.style.top = (bulbCenterY - 70) + 'px';
+  const seps = document.querySelectorAll('.nav-sep');
+  if (seps.length >= 3) {
+    const sep = seps[2]; // the "/" between 成果展示 and 关于我
+    const rect = sep.getBoundingClientRect();
+    bulbWrap.style.left = (rect.left + rect.width/2 - 70) + 'px';
+    bulbWrap.style.top = (rect.bottom + 50) + 'px';
+  }
 }
 
 // Only show bulb on home page
