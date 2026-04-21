@@ -992,14 +992,19 @@ if (galleryPreview) {
   const bulbPreload = new Image();
   bulbPreload.src = 'bulb-on.png';
 
-  // Wait for homepage images to finish loading
-  const priorityImgs = document.querySelectorAll('#page-home img[src]:not([src=""])');
+  // Specific priority images to wait for
+  const prioritySrcs = ['avatar.webp','photo-real.webp','bulb-off.png','wechat-qr.png'];
+  const priorityImgs = Array.from(document.querySelectorAll('img')).filter(img => 
+    prioritySrcs.some(s => img.getAttribute('src') && img.getAttribute('src').includes(s))
+  );
+  
   let loaded = 0;
   const total = priorityImgs.length || 1;
+  let triggered = false;
   
   function onPriorityDone(){
     loaded++;
-    if(loaded >= total) loadByPage();
+    if(loaded >= total && !triggered) { triggered = true; loadByPage(); }
   }
   
   priorityImgs.forEach(img => {
@@ -1007,8 +1012,8 @@ if (galleryPreview) {
     else { img.addEventListener('load', onPriorityDone); img.addEventListener('error', onPriorityDone); }
   });
   
-  // If no priority images, start immediately
-  if(priorityImgs.length === 0) loadByPage();
+  // Safety fallback: if nothing triggers after 3 seconds, load anyway
+  setTimeout(() => { if(!triggered) { triggered = true; loadByPage(); } }, 3000);
   
   function loadByPage(){
     const pageOrder = ['page-resume','page-startup','page-about'];
@@ -1017,12 +1022,13 @@ if (galleryPreview) {
       setTimeout(() => {
         const page = document.getElementById(pageId);
         if(!page) return;
-        page.querySelectorAll('img[data-lazy]').forEach(img => {
+        const imgs = page.querySelectorAll('img[data-lazy]');
+        imgs.forEach(img => {
           img.src = img.getAttribute('data-lazy');
           img.removeAttribute('data-lazy');
         });
       }, delay);
-      delay += 300; // stagger each page by 300ms
+      delay += 300;
     });
   }
 })();
