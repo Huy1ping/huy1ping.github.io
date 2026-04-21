@@ -1017,19 +1017,29 @@ if (galleryPreview) {
   
   function loadByPage(){
     const pageOrder = ['page-resume','page-startup','page-about'];
-    let delay = 0;
-    pageOrder.forEach(pageId => {
-      setTimeout(() => {
-        const page = document.getElementById(pageId);
-        if(!page) return;
-        const imgs = page.querySelectorAll('img[data-lazy]');
-        imgs.forEach(img => {
-          img.src = img.getAttribute('data-lazy');
-          img.removeAttribute('data-lazy');
-        });
-      }, delay);
-      delay += 300;
-    });
+    let idx = 0;
+    
+    function loadNext(){
+      if(idx >= pageOrder.length) return;
+      const page = document.getElementById(pageOrder[idx]);
+      idx++;
+      if(!page) { loadNext(); return; }
+      const imgs = page.querySelectorAll('img[data-lazy]');
+      if(imgs.length === 0) { loadNext(); return; }
+      let done = 0;
+      imgs.forEach(img => {
+        img.src = img.getAttribute('data-lazy');
+        img.removeAttribute('data-lazy');
+        if(img.complete) { done++; if(done >= imgs.length) loadNext(); }
+        else {
+          img.addEventListener('load', () => { done++; if(done >= imgs.length) loadNext(); });
+          img.addEventListener('error', () => { done++; if(done >= imgs.length) loadNext(); });
+        }
+      });
+      // Safety: if a page's images stall, move on after 8s
+      setTimeout(() => { if(done < imgs.length) loadNext(); }, 8000);
+    }
+    loadNext();
   }
 })();
 </script>
