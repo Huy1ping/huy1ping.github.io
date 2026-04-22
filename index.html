@@ -146,7 +146,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(254,254,254,
 /* Showcase scroll-snap container */
 .showcase-scroll{height:calc(100vh - 70px);overflow-y:auto;scroll-snap-type:y mandatory;scroll-behavior:smooth}
 .showcase-snap{height:calc(100vh - 70px);scroll-snap-align:start;scroll-snap-stop:always;display:flex;align-items:center;overflow:hidden}
-.showcase-snap.snap-footer{height:auto;min-height:160px;align-items:stretch;flex-direction:column}
+.showcase-snap.snap-footer{height:auto;min-height:160px;align-items:stretch;flex-direction:column;position:relative;z-index:10}
 .showcase-project{width:100%;margin:0 auto;padding:6px 228px}
 .project-header{display:flex;align-items:center;gap:16px;margin-bottom:8px;flex-wrap:wrap}
 .project-header .proj-logo{width:48px;height:48px;border-radius:10px;object-fit:contain;background:var(--bg-soft);padding:4px}
@@ -242,14 +242,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(254,254,254,
 .photo-item.ring-active{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
 
 /* ===== CONTACT BAR (in-flow) ===== */
-.contact-bar{width:100%;background:var(--bg-soft);border-top:1px solid var(--border);padding:28px 48px;margin-top:20px;position:relative;z-index:10}
+.contact-bar{width:100%;background:var(--bg-soft);border-top:1px solid var(--border);padding:28px 48px;margin-top:20px;position:relative;z-index:100}
 .contact-bar-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:40px}
 .contact-title{font-size:15px;font-weight:900;color:var(--text-primary);white-space:nowrap}
 .contact-item{position:relative;display:flex;align-items:center;gap:7px;cursor:pointer;color:var(--text-secondary);font-size:13px;transition:color .3s}
 .contact-item:hover{color:var(--accent)}
 .contact-item svg{width:20px;height:20px;transition:transform .3s}
 .contact-item:hover svg{transform:translateY(-2px)}
-.contact-popup{position:absolute;bottom:46px;left:50%;transform:translateX(-50%) translateY(8px);background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:12px 16px;box-shadow:0 8px 30px rgba(0,0,0,.12);opacity:0;pointer-events:none;transition:all .3s;white-space:nowrap;font-size:13px;color:var(--text-primary);font-family:var(--font-mono);z-index:20}
+.contact-popup{position:absolute;bottom:46px;left:50%;transform:translateX(-50%) translateY(8px);background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:12px 16px;box-shadow:0 8px 30px rgba(0,0,0,.12);opacity:0;pointer-events:none;transition:all .3s;white-space:nowrap;font-size:13px;color:var(--text-primary);font-family:var(--font-mono);z-index:200}
 .contact-popup::after{content:'';position:absolute;bottom:-6px;left:50%;transform:translateX(-50%) rotate(45deg);width:12px;height:12px;background:var(--bg-card);border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
 .contact-item:hover .contact-popup{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
 .contact-popup.qr-popup{padding:14px;text-align:center}
@@ -409,7 +409,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(254,254,254,
 <div class="tl-placeholder"></div></div>
 
 <div class="tl-row"><div class="tl-placeholder"></div>
-<div class="tl-card"><div class="card-top"><img class="card-logo" src="" data-lazy="stellren-logo.jpeg" alt="星见"><div class="card-info"><div class="card-time">2025.04 — 2026.03</div><div class="card-company">星见 StelRen</div><div class="card-role">商业化负责人</div></div></div><div class="card-motto">「能力迁移：跨行赋能文旅，商业闭环验证」</div><div class="card-line"></div><ul class="card-highlights"><li>构建「线上引流+线下变现+游学延展」分层商业模型</li><li>设计价格梯度产品矩阵，客单价覆盖200–2000元</li><li>线上讲座11场，线下活动15场，覆盖6省市</li></ul></div></div>
+<div class="tl-card"><div class="card-top"><img class="card-logo" src="" data-lazy="stellren-logo.jpeg" alt="星见"><div class="card-info"><div class="card-time">2025.04 — 2026.03</div><div class="card-company">星见 StelRen</div><div class="card-role">商业化负责人</div></div></div><div class="card-motto">「能力迁移：跨行赋能文旅，商业闭环验证」</div><div class="card-line"></div><ul class="card-highlights"><li>构建「线上引流+线下变现+游学延展」分层商业模型</li><li>设计「王牌路线 + 城市活动 + 公益科普」价格梯度产品矩阵</li><li>线上讲座11场，线下活动15场，覆盖6省市</li></ul></div></div>
 
 </div>
 </section>
